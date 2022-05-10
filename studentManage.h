@@ -86,26 +86,3 @@ SPG* newSPGNode()
 		return new;
 	}
 }
-
-
-// void main()
-// {
-// 	struct underGraduate sunder;
-// 	SPG yigeyanjius;
-// 	yigeyanjius.score.paper = 90;
-// 	system("chcp 65501");
-// 	sunder.score.math = 0;
-// 	sunder.sex = 1;
-// 	switch (sunder.sex)
-// 	{
-// 	case female:
-// 		printf("nv");
-		
-// 	case 1:
-// 		printf("nan");
-// 		break;
-// 	default:
-// 		printf("shenmexingbie?");
-// 		break;
-// 	}
-// }
