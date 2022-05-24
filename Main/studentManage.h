@@ -2,7 +2,7 @@
 #define SPGLEN sizeof(SPG)
 
 enum Sex{female,male};			// 0为女，1为男
-struct underGraduate //本科生
+typedef struct underGraduate 	//本科生结构体
 {
 	int id;						//学号
 	char name[16];				//姓名
@@ -11,10 +11,9 @@ struct underGraduate //本科生
 	char class[30];				//班级
 	int score[6];				// 0-5分别为 数学 英语 C语言 总分 班排名 校排名
 	struct underGraduate *next; //下一个节点
-};
-typedef struct underGraduate SUG; //本科生的类型定义
+}SUG;
 
-struct postGraduate //研究生
+typedef struct postGraduate 	//研究生结构体
 {
 	int id;					   //学号
 	char name[16];			   //姓名
@@ -25,8 +24,7 @@ struct postGraduate //研究生
 	char teacher[16];		   //导师
 	int score[5];			   // 0-4分别为综合课程 论文 总成绩 班排名 校排名
 	struct postGraduate *next; //下一个节点
-};
-typedef struct postGraduate SPG; //研究生的类型定义
+}SPG;
 
 SUG *SUGHead = NULL, *SUGTail = NULL; // List:本科生链表头节点;Tail:尾节点
 SPG *SPGHead = NULL, *SPGTail = NULL; // List:研究生链表头节点;Tail:尾节点

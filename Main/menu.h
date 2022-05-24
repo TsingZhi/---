@@ -281,7 +281,7 @@ void deleteUStu(int id)
 		temp = pFront;
 		pFront = pFront->next;
 		free(temp);
-		printf("该学生已删除\n");
+		printf("该本科生已被删除\n");
 		return;
 	}
 	while(pBehind != NULL && pBehind->id != id) //使用pBehind寻找需要删除的节点
@@ -300,7 +300,7 @@ void deleteUStu(int id)
 		pBehind = pBehind->next;
 		pFront->next = pBehind;
 		free(temp);
-		printf("该学生已被删除\n");
+		printf("该本科生已被删除\n");
 	}
 }
 //根据学号删除一个研究生（释放节点内存）
