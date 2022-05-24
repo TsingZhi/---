@@ -8,6 +8,10 @@ void addBaseData();
 void addStudent(int stu, int quantity);
 void modifyBaseData();
 void modifyStudent(int stu, int id);
+void deleteBaseData();
+void deleteStudent(int stu, int id);
+void deleteUStu(int id);
+void deletePStu(int id);
 
 /****************************************/
 //子菜单1：数据维护
@@ -59,10 +63,9 @@ void BaseData_maintenance()
 	{
 	case 1:	addBaseData();		break;
 	case 2: modifyBaseData();	break;
-	case 3: /*删除函数*/break;
+	case 3: deleteBaseData(); 	break;
 	case 4: /*查询函数*/break;
 	}
-	
 }
 //添加数据的菜单
 void addBaseData()
@@ -245,5 +248,93 @@ void modifyStudent(int stu, int id)
 		}
 		if (flag == 0)
 			printf("未找到学号为%d的研究生，请检查是否有该学生\n", id);
+	}
+}
+//删除数据菜单
+void deleteBaseData()
+{
+	int stu, id;
+	printf("----------删除数据菜单----------\n");
+	printf("删除本科生还是研究生的数据？");
+	printf("1-本科生 2-研究生");
+	scanf("%d", &stu);
+	printf("输入被删除学生的学号:");
+	scanf("%d", &id);
+	deleteStudent(stu, id);
+}
+//删除数据函数:学号相符则释放该节点内存
+void deleteStudent(int stu, int id)
+{
+	if (stu == 1)
+		deleteUStu(id); // 删除学号为id的本科生
+	else
+		deletePStu(id); // 删除学号为id的研究生
+}
+//根据学号删除一个本科生（释放节点内存）
+void deleteUStu(int id)
+{
+	SUG *pFront, *pBehind, *temp;
+	int flag = 0;//删除成功标志
+	temp = NULL;
+	pFront = SUGHead;
+	pBehind = pFront->next;
+	if (pFront->id == id) //链表头节点就是要删除的对象
+	{
+		temp = pFront;
+		pFront = pFront->next;
+		free(temp);
+		printf("该学生已删除\n");
+	}
+	while(pBehind != NULL && pBehind->id != id) //使用pBehind寻找需要删除的节点
+	{
+		pFront = pFront->next;
+		pBehind = pBehind->next;
+	}
+	if(pBehind == NULL)//未找到被删除的对象,返回
+	{
+		printf("未找到要被删除的对象\n");
+		return;
+	}
+	else//此时pBehind即需要删除的对象
+	{
+		temp = pBehind;
+		pBehind = pBehind->next;
+		pFront->next = pBehind;
+		free(temp);
+		printf("该学生已被删除\n");
+	}
+}
+//根据学号删除一个研究生（释放节点内存）
+void deleteUStu(int id)
+{
+	SUG *pFront, *pBehind, *temp;
+	int flag = 0;//删除成功标志
+	temp = NULL;
+	pFront = SUGHead;
+	pBehind = pFront->next;
+	if (pFront->id == id) //链表头节点就是要删除的对象
+	{
+		temp = pFront;
+		pFront = pFront->next;
+		free(temp);
+		printf("该学生已删除\n");
+	}
+	while(pBehind != NULL && pBehind->id != id)
+	{
+		pFront = pFront->next;
+		pBehind = pBehind->next;
+	}
+	if(pBehind == NULL)//未找到被删除的对象,返回
+	{
+		printf("未找到要被删除的对象\n");
+		return;
+	}
+	else//此时pBehind即需要删除的对象
+	{
+		temp = pBehind;
+		pBehind = pBehind->next;
+		pFront->next = pBehind;
+		free(temp);
+		printf("该学生已被删除\n");
 	}
 }
