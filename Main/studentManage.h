@@ -2,15 +2,6 @@
 #define SPGLEN sizeof(SPG)
 
 enum Sex{female,male};  // 0为女，1为男
-// struct underGraduateScore //本科生成绩
-// {
-// 	int math;		  //数学成绩
-// 	int english;	  //英语成绩
-// 	int Clanguage;	  // C语言成绩
-// 	int totalScore;	  //总分
-// 	int rankInClass;  //班排名
-// 	int rankInSchool; //校排名
-// };
 struct underGraduate //本科生
 {
 	int id;						//学号
@@ -23,14 +14,6 @@ struct underGraduate //本科生
 };
 typedef struct underGraduate SUG; //本科生的类型定义
 
-// struct postGraduateScore //研究生成绩
-// {
-// 	int class;		  //综合课程成绩
-// 	int paper;		  //论文成绩
-// 	int totalScore;	  //总成绩
-// 	int rankInClass;  //班排名
-// 	int rankInSchool; //校排名
-// };
 struct postGraduate //研究生
 {
 	int id;				 //学号
@@ -46,8 +29,8 @@ struct postGraduate //研究生
 typedef struct postGraduate SPG;//研究生的类型定义
 
 SUG *SUGHead = NULL, *SUGTail = NULL; // List:本科生链表头节点;Tail:尾节点
-SUG SUGpage[30];//分页输出用，每十个节点记录一次
 SPG *SPGHead = NULL, *SPGTail = NULL; // List:研究生链表头节点;Tail:尾节点
+SUG SUGpage[30];//分页输出用，每十个节点记录一次
 SPG SPGPage[30];//分页输出用，每十个节点记录一次
 
 //申请新的本科生节点，尾指针自动置NULL，成绩初始化为-1

@@ -273,17 +273,16 @@ void deleteStudent(int stu, int id)
 //根据学号删除一个本科生（释放节点内存）
 void deleteUStu(int id)
 {
-	SUG *pFront, *pBehind, *temp;
-	int flag = 0;//删除成功标志
-	temp = NULL;
+	SUG *pFront, *pBehind, *temp = NULL;
 	pFront = SUGHead;
 	pBehind = pFront->next;
-	if (pFront->id == id) //链表头节点就是要删除的对象
+	if (pFront->id == id) //链表头节点就是要删除的对象时
 	{
 		temp = pFront;
 		pFront = pFront->next;
 		free(temp);
 		printf("该学生已删除\n");
+		return;
 	}
 	while(pBehind != NULL && pBehind->id != id) //使用pBehind寻找需要删除的节点
 	{
@@ -305,19 +304,18 @@ void deleteUStu(int id)
 	}
 }
 //根据学号删除一个研究生（释放节点内存）
-void deleteUStu(int id)
+void deletePStu(int id)
 {
-	SUG *pFront, *pBehind, *temp;
-	int flag = 0;//删除成功标志
-	temp = NULL;
-	pFront = SUGHead;
+	SPG *pFront, *pBehind, *temp = NULL;
+	pFront = SPGHead;
 	pBehind = pFront->next;
-	if (pFront->id == id) //链表头节点就是要删除的对象
+	if (pFront->id == id) //链表头节点就是要删除的对象时
 	{
 		temp = pFront;
 		pFront = pFront->next;
 		free(temp);
-		printf("该学生已删除\n");
+		printf("该研究生已删除\n");
+		return;
 	}
 	while(pBehind != NULL && pBehind->id != id)
 	{
@@ -335,6 +333,6 @@ void deleteUStu(int id)
 		pBehind = pBehind->next;
 		pFront->next = pBehind;
 		free(temp);
-		printf("该学生已被删除\n");
+		printf("该研究生已被删除\n");
 	}
 }
