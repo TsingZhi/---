@@ -4,6 +4,14 @@
  * 注意：必须是完全完成的才写进来（包括子函数）
  * */
 
+int checkSUGScore(SUG *pSUG);
+int checkSPGScore(SPG *pSPG);
+void printSUGTitle();
+void printSPGTitle();
+void printSUGBaseData(SUG *pSUG);
+void printSPGBaseData(SPG *pSPG);
+void printSUGInfo(SUG *pSUG);
+void printSPGInfo(SPG *pSPG);
 void addBaseData();
 void addStudent(int stu, int quantity);
 void modifyBaseData();
@@ -12,8 +20,62 @@ void deleteBaseData();
 void deleteStudent(int stu, int id);
 void deleteUStu(int id);
 void deletePStu(int id);
+void inquireBaseData();
+void inquireStu(int stu, int id);
 
 /****************************************/
+//检查本科生成绩(数学、英语、C语言、总分)是否有无效成绩（-1），如果有则返回1， 否则返回0
+int checkSUGScore(SUG *pSUG)
+{
+	int i;
+	for ( i = 0; i < 4; i++)
+	{
+		if (pSUG->score[i] == -1)
+			return 1;
+	}
+	return 0;
+}
+//检查研究生成绩(综合课程、论文、总成绩)是否有无效成绩（-1），如果有则返回1， 否则返回0
+int checkSPGScore(SPG *pSPG)
+{
+	int i;
+	for ( i = 0; i < 3; i++)
+	{
+		if (pSPG->score[i] == -1)
+			return 1;
+	}
+	return 0;
+}
+//输出本科生信息组成部分
+void printSUGTitle()
+{printf("学号\t\t姓名\t\t性别\t\t专业\t\t班级\t\t数学\t\t英语\t\tC语言\t\t总分\t\t班排名\t\t校排名\n");}
+//输出一个本科生的全部信息
+void printSUGInfo(SUG *pSUG)
+{
+	if (pSUG->sex == 0)
+		printf("%d\t\t%s\t\t女\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+			   pSUG->id, pSUG->name, pSUG->profession, pSUG->class, pSUG->score[0], pSUG->score[1],
+			   pSUG->score[2], pSUG->score[3], pSUG->score[4], pSUG->score[5]);
+	else
+		printf("%d\t\t%s\t\t男\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+			   pSUG->id, pSUG->name, pSUG->profession, pSUG->class, pSUG->score[0], pSUG->score[1],
+			   pSUG->score[2], pSUG->score[3], pSUG->score[4], pSUG->score[5]);
+}
+//输出研究生信息组成部分
+void printSPGTitle()
+{printf("学号\t\t姓名\t\t性别\t\t专业\t\t班级\t\t研究方向\t\t导师\t\t综合课程\t\t论文\t\t总成绩\t\t班排名\t\t校排名\\n");}
+//输出一个研究生的全部信息
+void printSPGInfo(SPG *pSPG)
+{
+	if (pSPG->sex == 0)
+		printf("%d\t\t%s\t\t女\t\t%s\t\t%s\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher,
+		pSPG->score[0], pSPG->score[1], pSPG->score[2], pSPG->score[3], pSPG->score[4]);
+	else
+		printf("%d\t\t%s\t\t男\t\t%s\t\t%s\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher,
+		pSPG->score[0], pSPG->score[1], pSPG->score[2], pSPG->score[3], pSPG->score[4]);
+}
 //子菜单1：数据维护
 void Data_maintenance()
 {
@@ -26,7 +88,7 @@ void Data_maintenance()
 		fflush(stdin);
 		scanf("%d", &option);
 		if (option != 1 && option != 2)
-			printf("输入有误，请重新输入.\n");
+			printf("输入有误，请重新输入:");
 		else
 			break;
 	}
@@ -54,7 +116,7 @@ void BaseData_maintenance()
 		printf("输入选项:");
 		fflush(stdin);
 		scanf("%d", &option);
-		if (option < 1 && option >4)
+		if (option < 1 || option >4)
 			printf("输入有误，请重新输入.\n");
 		else
 			break;
@@ -64,7 +126,7 @@ void BaseData_maintenance()
 	case 1:	addBaseData();		break;
 	case 2: modifyBaseData();	break;
 	case 3: deleteBaseData(); 	break;
-	case 4: /*查询函数*/break;
+	case 4: inquireBaseData();	break;
 	}
 }
 //添加数据的菜单
@@ -78,12 +140,10 @@ void addBaseData()
 	{
 		printf("输入选项:");
 		scanf("%d", &stuOption);
-		switch (stuOption)
-		{
-		case 1:	case 2:		break;
-		default:
-			printf("输入有误，请重新输入.\n");
-		}
+		if (stuOption != 1 && stuOption != 2)
+			printf("输入有误，请重新输入:");
+		else
+			break;
 	}
 	printf("添加单个还是多个?\n");
 	printf("1.单个 \t 2.多个");
@@ -91,12 +151,10 @@ void addBaseData()
 	{
 		printf("输入选项:");
 		scanf("%d", &quantity);
-		switch (quantity)
-		{
-		case 1:	case 2:		break;
-		default:
-			printf("输入有误，请重新输入.\n");
-		}
+		if (quantity != 1 && quantity != 2)
+			printf("输入有误，请重新输入:");
+		else
+			break;
 	}
 	addStudent(stuOption, quantity);
 }
@@ -107,29 +165,32 @@ void addStudent(int stu, int quantity)
 {
 	SUG *newSUG = NULL, *p1 = NULL;
 	SPG *newSPG = NULL, *p2 = NULL;
-	static int number;
+	int number = 0;
 	if(stu == 1)
 	{
 		if (quantity == 1)
-			printf("输入该本科生的姓名 性别 专业 班级:\n");
+			printf("输入该本科生的姓名 性别(0-女 1-男 ) 专业 班级:(性别输入-1以结束)\n");
 		else
-			printf("输入若干本科生的姓名 性别 专业 班级:(性别输入-1以结束)\n");
+			printf("输入若干本科生的姓名 性别(0-女 1-男) 专业 班级:(性别输入-1以结束)\n");
 		fflush(stdin);
 		while (1)
 		{
-			printf("输入第%d个学生:", number + 1);
+			printf("输入第%d个本科生:", number + 1);
 			newSUG = newSUGNode();
 			scanf("%s%d%s%s", &newSUG->name, &newSUG->sex, &newSUG->profession, &newSUG->class);
 			if (newSUG->sex == -1) break;
 			if (SUGHead == NULL) //本科生链表无数据时
 			{
 				SUGHead = newSUG; //置该节点为头节点
+				SUGpage[0] = SUGHead; //本科生头节点存入翻页数组
 				SUGHead->id = 1;
 				SUGTail = newSUG;
 			}
 			else
 			{
 				newSUG->id = SUGTail->id + 1;
+				if ((newSUG->id % 10) == 1)
+					SUGpage[newSUG->id / 10] = newSUG; //满足条件则存入翻页数组
 				SUGTail->next = newSUG;
 				SUGTail = newSUG;
 			}
@@ -141,9 +202,9 @@ void addStudent(int stu, int quantity)
 	else
 	{
 		if (quantity == 1)
-			printf("输入该研究生的姓名 性别 专业 班级 研究方向 导师:\n");
+			printf("输入该研究生的姓名 性别(0-女 1-男) 专业 班级 研究方向 导师:(性别输入-1以结束)\n");
 		else
-			printf("输入若干研究生的姓名 性别 专业 班级 研究方向 导师:(性别输入-1以结束)\n");
+			printf("输入若干研究生的姓名 性别(0-女 1-男) 专业 班级 研究方向 导师:(性别输入-1以结束)\n");
 		fflush(stdin);
 		while (1)
 		{
@@ -156,11 +217,14 @@ void addStudent(int stu, int quantity)
 			{
 				SPGHead = newSPG; //置该节点为头节点
 				SPGHead->id = 1;
+				SPGPage[0] = newSPG; //存入翻页数组
 				SPGTail = newSPG;
 			}
 			else
 			{
 				newSPG->id = SPGTail->id + 1;
+				if ((newSPG->id % 10) == 1)
+					SPGpage[newSPG->id / 10] = newSPG; //满足条件则存入翻页数组
 				SPGTail->next = newSPG;
 				SPGTail = newSPG;
 			}
@@ -334,5 +398,53 @@ void deletePStu(int id)
 		pFront->next = pBehind;
 		free(temp);
 		printf("该研究生已被删除\n");
+	}
+}
+//查询数据菜单 
+void inquireBaseData()
+{
+	int stu, id;
+	printf("----------查询数据菜单----------\n");
+	printf("查询本科生还是研究生的数据?\n")
+		printf("1-本科生\t2-研究生\n");
+	printf("请输入:");
+	scanf("%d", &stu);
+	while (stu != 1 && stu != 2)
+	{
+		printf("意外的选项.请重新输入:");
+		scanf("%d", &stu);
+	}
+	printf("请输入需要查找学生的学号:");
+	scanf("%d", &id);
+	inquireStu(stu, id);
+}
+//根据接收的学生类型和学号（形参）进行查找并输出基本数据
+void inquireStu(int stu, int id)
+{
+	SUG *pSUG = SUGHead;
+	SPG *pSPG = SPGHead;
+	if (stu == 1) //查找本科生数据
+	{
+		do
+		{
+			if(pSUG->id == id)
+			{
+				if(checkSUGScore(pSUG) == 1)
+				{
+					printf("学号为%d的本科生存在无效数据，请检查:\n", id);
+					printSUGTitle();
+					printSUGInfo(pSUG);
+					return ;
+				}
+				else
+				{
+					printf("查找成功,该本科生数据如下:\n");
+					printSUGTitle();
+					printSUGInfo(pSUG);
+				}
+			}
+			else
+				pSUG = pSUG->next;
+		} while (pSUG->id != id);
 	}
 }
