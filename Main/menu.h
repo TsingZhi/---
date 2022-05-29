@@ -182,7 +182,7 @@ void addStudent(int stu, int quantity)
 			if (SUGHead == NULL) //本科生链表无数据时
 			{
 				SUGHead = newSUG; //置该节点为头节点
-				SUGpage[0] = SUGHead; //本科生头节点存入翻页数组
+				SUGpage[0] = *SUGHead; //本科生头节点存入翻页数组
 				SUGHead->id = 1;
 				SUGTail = newSUG;
 			}
@@ -190,7 +190,7 @@ void addStudent(int stu, int quantity)
 			{
 				newSUG->id = SUGTail->id + 1;
 				if ((newSUG->id % 10) == 1)
-					SUGpage[newSUG->id / 10] = newSUG; //满足条件则存入翻页数组
+					SUGpage[newSUG->id / 10] = *newSUG; //满足条件则存入翻页数组
 				SUGTail->next = newSUG;
 				SUGTail = newSUG;
 			}
@@ -217,14 +217,14 @@ void addStudent(int stu, int quantity)
 			{
 				SPGHead = newSPG; //置该节点为头节点
 				SPGHead->id = 1;
-				SPGPage[0] = newSPG; //存入翻页数组
+				SPGPage[0] = *newSPG; //存入翻页数组
 				SPGTail = newSPG;
 			}
 			else
 			{
 				newSPG->id = SPGTail->id + 1;
 				if ((newSPG->id % 10) == 1)
-					SPGpage[newSPG->id / 10] = newSPG; //满足条件则存入翻页数组
+					SPGPage[newSPG->id / 10] = *newSPG; //满足条件则存入翻页数组
 				SPGTail->next = newSPG;
 				SPGTail = newSPG;
 			}
@@ -405,8 +405,8 @@ void inquireBaseData()
 {
 	int stu, id;
 	printf("----------查询数据菜单----------\n");
-	printf("查询本科生还是研究生的数据?\n")
-		printf("1-本科生\t2-研究生\n");
+	printf("查询本科生还是研究生的数据?\n");
+	printf("1-本科生\t2-研究生\n");
 	printf("请输入:");
 	scanf("%d", &stu);
 	while (stu != 1 && stu != 2)
