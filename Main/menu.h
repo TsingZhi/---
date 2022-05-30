@@ -49,6 +49,14 @@ int checkSPGScore(SPG *pSPG)
 //输出本科生信息组成部分
 void printSUGTitle()
 {printf("学号\t\t姓名\t\t性别\t\t专业\t\t班级\t\t数学\t\t英语\t\tC语言\t\t总分\t\t班排名\t\t校排名\n");}
+//输出一个本科生的基本信息
+void printSUGBaseData(SUG *pSUG)
+{
+	if(pSUG->sex == 0)
+		printf("%d\t\t%s%\t\t女\t\t%s\t\t%s\n", pSUG->id, pSUG->name, pSUG->profession, pSUG->class);
+	else
+		printf("%d\t\t%s%\t\t男\t\t%s\t\t%s\n", pSUG->id, pSUG->name, pSUG->profession, pSUG->class);
+}
 //输出一个本科生的全部信息
 void printSUGInfo(SUG *pSUG)
 {
@@ -64,6 +72,16 @@ void printSUGInfo(SUG *pSUG)
 //输出研究生信息组成部分
 void printSPGTitle()
 {printf("学号\t\t姓名\t\t性别\t\t专业\t\t班级\t\t研究方向\t\t导师\t\t综合课程\t\t论文\t\t总成绩\t\t班排名\t\t校排名\\n");}
+//输出一个研究生的基本信息
+void printSPGBaseData(SPG *pSPG)
+{
+	if (pSPG->sex == 0)
+		printf("%d\t\t%s\t\t女\t\t%s\t\t%s\t\t%s\t\t%s\n",
+		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
+	else
+		printf("%d\t\t%s\t\t男\t\t%s\t\t%s\t\t%s\t\t%s\n",
+		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
+}
 //输出一个研究生的全部信息
 void printSPGInfo(SPG *pSPG)
 {
@@ -158,9 +176,11 @@ void addBaseData()
 	}
 	addStudent(stuOption, quantity);
 }
+
 /**参数说明：stu为要添加的学生类型， 1-本科生，2-研究生;
  * quantity为添加模式，1-添加单个，2-添加多个（重复执行单个添加)
  * */
+
 void addStudent(int stu, int quantity)
 {
 	SUG *newSUG = NULL, *p1 = NULL;
@@ -427,24 +447,36 @@ void inquireStu(int stu, int id)
 	{
 		do
 		{
-			if(pSUG->id == id)
+			if (pSUG->id == id)
 			{
-				if(checkSUGScore(pSUG) == 1)
-				{
-					printf("学号为%d的本科生存在无效数据，请检查:\n", id);
-					printSUGTitle();
-					printSUGInfo(pSUG);
-					return ;
-				}
-				else
-				{
-					printf("查找成功,该本科生数据如下:\n");
-					printSUGTitle();
-					printSUGInfo(pSUG);
-				}
+				system("cls");
+				printf("查找成功，学号为%d的本科生基本数据如下:\n");
+				printSUGTitle();
+				printSUGBaseData(pSUG);
+				if (checkSUGScore(pSUG) == 1)
+					printf("提示:学号为%d的本科生成绩存在无效数据，请检查\n", id);
+				return;
 			}
 			else
 				pSUG = pSUG->next;
 		} while (pSUG->id != id);
+	}
+	else //查找研究生数据
+	{
+		do
+		{
+			if (pSPG->id == id)
+			{
+				system("cls");
+				printf("查找成功，学号为%d的研究生基本数据如下:\n");
+				printSPGTitle();
+				printSPGBaseData(pSPG);
+				if (checkSPGScore(pSPG) == 1)
+					printf("提示:学号为%d的研究生成绩存在无效数据，请检查\n", id);
+				return;
+			}
+			else
+				pSPG = pSPG->next;
+		} while (pSPG->id != id);
 	}
 }
