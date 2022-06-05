@@ -12,6 +12,8 @@ void printSUGBaseData(SUG *pSUG);
 void printSPGBaseData(SPG *pSPG);
 void printSUGInfo(SUG *pSUG);
 void printSPGInfo(SPG *pSPG);
+
+void BaseData_maintenance();
 void addBaseData();
 void addStudent(int stu, int quantity);
 void modifyBaseData();
@@ -23,15 +25,21 @@ void deletePStu(int id);
 void inquireBaseData();
 void inquireStu(int stu, int id);
 
+void PerformanceData_maintenance();
+
 /****************************************/
 //检查本科生成绩(数学、英语、C语言、总分)是否有无效成绩（-1），如果有则返回1， 否则返回0
 int checkSUGScore(SUG *pSUG)
 {
 	int i;
-	for ( i = 0; i < 4; i++)
+	for ( i = 0; i < 3; i++)
 	{
 		if (pSUG->score[i] == -1)
+		{
+			if (pSUG->score[3] == -1)
+				printf("提示:学号为%d的本科生总成绩未计算\n", pSUG->id);
 			return 1;
+		}
 	}
 	return 0;
 }
@@ -39,10 +47,14 @@ int checkSUGScore(SUG *pSUG)
 int checkSPGScore(SPG *pSPG)
 {
 	int i;
-	for ( i = 0; i < 3; i++)
+	for ( i = 0; i < 2; i++)
 	{
 		if (pSPG->score[i] == -1)
+		{
+			if (pSPG->score[2] == -1)
+				printf("提示：学号为%d的研究生总成绩未计算\n");
 			return 1;
+		}
 	}
 	return 0;
 }
@@ -180,7 +192,6 @@ void addBaseData()
 /**参数说明：stu为要添加的学生类型， 1-本科生，2-研究生;
  * quantity为添加模式，1-添加单个，2-添加多个（重复执行单个添加)
  * */
-
 void addStudent(int stu, int quantity)
 {
 	SUG *newSUG = NULL, *p1 = NULL;
@@ -299,7 +310,7 @@ void modifyStudent(int stu, int id)
 				else
 					printf("%-5s 男 %-10s %-5s", pSUG->name, pSUG->profession, pSUG->class);
 				printf("依次输入姓名 性别（0为女1为男） 专业 班级以覆盖:\n");
-				scanf("%s%d%s%d", pSUG->name, pSUG->sex, pSUG->profession, pSUG->class);
+				scanf("%s%d%s%d", &pSUG->name, &pSUG->sex, &pSUG->profession, &pSUG->class);
 				printf("修改学号为%d的本科生基本资料成功\n", id);
 				return;
 			}
@@ -325,7 +336,7 @@ void modifyStudent(int stu, int id)
 				else
 					printf("%-5s 男 %-10s %-5s %-10s %-5s", pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
 				printf("依次输入姓名 性别（0为女1为男） 专业 班级 研究方向 导师以覆盖:\n");
-				scanf("%s%d%s%d", pSPG->name, pSPG->sex, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
+				scanf("%s%d%s%d", &pSPG->name, &pSPG->sex, &pSPG->profession, &pSPG->class, &pSPG->direction, &pSPG->teacher);
 				printf("修改学号为%d的研究生基本资料成功\n", id);
 				return;
 			}
@@ -478,5 +489,341 @@ void inquireStu(int stu, int id)
 			else
 				pSPG = pSPG->next;
 		} while (pSPG->id != id);
+	}
+}
+
+/**成绩管理部分声明区
+ * 全部完成后再复制到文件首部的声明区
+ */
+
+void inputPerformanceData();
+void inputScore(int stu, int quantity);
+void modifyPerformanceData();
+void modifyScore(int stu, int id);
+void deletePerformanceData();
+void deleteScore(int stu, int id);
+
+//成绩数据管理菜单
+void PerformanceData_maintenance()
+{
+	int option;
+	printf("-------成绩数据维护菜单-------\n");
+	printf("1.添加: 添加学生成绩资料数据\n");
+	printf("2.修改：根据学号来修改任意学生的除学号外的其他成绩资料数据\n");
+	printf("3.删除：根据学号删除一个学生\n");
+	printf("4.查询：根据学号查询一个学生的成绩资料数据\n");
+	while (1)
+	{
+		printf("输入选项:");
+		fflush(stdin);
+		scanf("%d", &option);
+		if (option < 1 || option >4)
+			printf("输入有误，请重新输入.\n");
+		else
+			break;
+	}
+	switch (option)
+	{
+	case 1:	inputPerformanceData();	break;
+	case 2:	modifyPerformanceData();	break;
+	case 3:  		break;
+	case 4:			break;
+	}
+}
+//输入成绩菜单
+void inputPerformanceData()
+{
+	int option, quantity;
+	printf("\t\t请选择添加哪种学生的成绩\n");
+	printf("1-本科生 \t 2-研究生\n");
+	printf("请输入选项:");
+	while (1)
+	{
+		scanf("%d", &option);
+		if(option != 1 && option != 2)
+			printf("输入有误，请重新输入：");
+		else
+			break;
+	}
+	printf("\t\t请选择添加数量:\n");
+	printf("1-单个 \t 2-多个\n");
+	printf("请输入选项:");
+	while (1)
+	{
+		scanf("%d", &quantity);
+		if(quantity != 1 && quantity != 2)
+			printf("输入有误，请重新输入：");
+		else
+			break;
+	}
+	inputScore(option, quantity);
+}
+//参数说明:stu:1-本科生 2-研究生 quantity:1-单个 2-多个
+void inputScore(int stu, int quantity)
+{
+	int index;
+	int score[3];
+	SUG *pSUG = NULL;
+	SPG *pSPG = NULL;
+	int id;
+	printf("请输入需要输入成绩的学生的学号:");
+	scanf("%d", &id);
+	if (stu == 1) //查找本科生
+	{
+		pSUG = SUGHead;
+		if(pSUG == NULL)
+		{
+			printf("链表中无本科生数据,即将返回上一级\n");
+			system("pause");
+			return;
+		}
+		do{
+			if(pSUG->id == id)
+			{
+				if(checkSUGScore(pSUG) == 0)
+				{
+					printf("学号为%d的本科生已有成绩，无需输入\n", id);
+					system("pause");
+					return;
+				}
+				else
+				{
+					printf("学号为%d本科生的本科生成绩如下:(-1为无效成绩)\n", id);
+					printf("学号\t\t姓名\t\t数学\t\t英语\t\tC语言\n");
+					printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\n",
+					id, pSUG->name, pSUG->score[0], pSUG->score[1], pSUG->score[2]);
+					if(quantity == 1) //输入单个成绩
+					{
+						printf("1-数学 2-英语 3-C语言\n");
+						printf("输入要更改的成绩:\n");
+						scanf("%d", &index);
+						printf("输入分数:");
+						fflush(stdin);
+						scanf("%d", score[0]);
+						pSUG->score[index - 1] = score[0];
+						printf("成绩修改完成\n");
+						system("pause");
+						return;
+					}
+					else //输入多个成绩
+					{
+						printf("请依次输入数学、英语、C语言成绩:");
+						fflush(stdin);
+						for (index = 0; index < 3; index++)
+						{
+							scanf("%d", score[index]);
+							pSUG->score[index] = score[index];
+						}
+						printf("该本科生的全部成绩修改完成\n");
+						system("pause");
+						return;
+					}
+				}
+			}
+			else
+				pSUG = pSUG->next;
+		} while (pSUG != NULL);
+		if (pSUG == NULL)
+			printf("未找到学号为%d的本科生!\n", id);
+	}
+	else //查找研究生
+	{
+		pSPG = SPGHead;
+		if(pSPG == NULL)
+		{
+			printf("链表中无研究生数据,即将返回上一级\n");
+			system("pause");
+			return;
+		}
+		do{
+			if(pSPG->id == id)
+			{
+				if(checkSPGScore(pSPG) == 0)
+				{
+					printf("学号为%d的研究生已有成绩，无需输入\n", id);
+					system("pause");
+					return;
+				}
+				else
+				{
+					printf("学号为%d研究生的研究生成绩如下:(-1为无效成绩)\n", id);
+					printf("学号\t\t姓名\t\t综合课程\t\t论文\n");
+					printf("%d\t\t%s\t\t%d\t\t%d\n",
+					id, pSPG->name, pSPG->score[0], pSPG->score[1]);
+					if(quantity == 1) //输入单个成绩
+					{
+						printf("1-综合课程 2-论文成绩\n");
+						printf("输入要更改的成绩:\n");
+						scanf("%d", &index);
+						printf("输入分数:");
+						fflush(stdin);
+						scanf("%d", score[0]);
+						pSPG->score[index - 1] = score[0];
+						printf("成绩修改完成\n");
+						system("pause");
+						return;
+					}
+					else //输入多个成绩
+					{
+						printf("请依次输入综合课程和论文成绩:");
+						fflush(stdin);
+						for (index = 0; index < 2; index++)
+						{
+							scanf("%d", score[index]);
+							pSPG->score[index] = score[index];
+						}
+						printf("该研究生的全部成绩修改完成\n");
+						system("pause");
+						return;
+					}
+				}
+			}
+			else
+				pSPG = pSPG->next;
+		} while (pSPG != NULL);
+		if (pSPG == NULL)
+			printf("未找到学号为%d的研究生!", id);
+	}
+}
+//修改成绩菜单
+void modifyPerformanceData()
+{
+	int option, id;
+	printf("-----修改成绩菜单-----\n");
+	printf("1-修改本科生成绩\t2-修改研究生成绩\n");
+	printf("请输入选项:");
+	do
+	{
+		scanf("%d", &option);
+		if(option != 1 && option != 2)
+			printf("输入有误，请重新输入:");
+		else
+			break;
+	} while (1);
+	printf("请输入被修改成绩的学生的学号:");
+	scanf("%d", &id);
+	modifyScore(option, id);
+}
+//根据学号修改学生的成绩
+void modifyScore(int stu, int id)
+{
+	int index;
+	int score[3];
+	SUG *pSUG = NULL;
+	SPG *pSPG = NULL;
+	if (stu == 1) //修改本科生
+	{
+		pSUG = SUGHead;
+		if (pSUG == NULL)
+		{
+			printf("链表中无本科生数据,即将返回上一级\n");
+			system("pause");
+			return;
+		}
+		do
+		{
+			if (pSUG->id == id)
+			{
+				printf("学号为%d的本科生成绩如下:(-1为无效成绩)\n", id);
+				printf("学号\t\t姓名\t\t数学\t\t英语\t\tC语言\n");
+				printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\n",
+					   id, pSUG->name, pSUG->score[0], pSUG->score[1], pSUG->score[2]);
+				printf("请依次输入数学、英语、C语言成绩:");
+				fflush(stdin);
+				for (index = 0; index < 3; index++)
+				{
+					scanf("%d", score[index]);
+					pSUG->score[index] = score[index];
+				}
+				printf("该本科生的全部成绩修改完成\n");
+				system("pause");
+				return;
+			}
+			else
+				pSUG = pSUG->next;
+		} while (pSUG != NULL);
+		if (pSUG == NULL)
+			printf("未找到学号为%d的本科生!\n", id);
+	}
+	else //查找研究生
+	{
+		pSPG = SPGHead;
+		if(pSPG == NULL)
+		{
+			printf("研究生链表无数据,即将返回上一层\n");
+			system("pause");
+			return;
+		}
+		do
+		{
+			if (pSPG->id == id)
+			{
+				printf("学号为%d的研究生成绩如下:(-1为无效成绩)\n", id);
+				printf("学号\t\t姓名\t\t综合课程\t\t论文\n");
+				printf("%d\t\t%s\t\t%d\t\t%d\n",
+					   id, pSPG->name, pSPG->score[0], pSPG->score[1]);
+				printf("请依次输入综合课程和论文成绩:");
+				fflush(stdin);
+				for (index = 0; index < 2; index++)
+				{
+					scanf("%d", score[index]);
+					pSPG->score[index] = score[index];
+				}
+				printf("该研究生的全部成绩修改完成\n");
+				system("pause");
+				return;
+			}
+			else
+				pSPG = pSPG->next;
+		} while (pSPG != NULL);
+		if (pSPG == NULL)
+			printf("未找到学号为%d的研究生.\n", id);
+		system("pause");
+	}
+}
+//删除学生成绩数据菜单
+void deletePerformanceData()
+{
+	int stu, id;
+	printf("-----删除学生成绩数据菜单-----");
+	printf("1-本科生\t2-研究生");
+	printf("请输入选项:");
+	do
+	{
+		scanf("%d", stu);
+		if (stu != 1 && stu != 2)
+			printf("输入有误，请重新输入:");
+	} while (stu != 1 && stu != 2);
+	printf("请输入需要删除学生的学号:");
+	scanf("%d", &id);
+	deleteScore(stu, id);
+}
+//根据学号删除一个学生成绩数据（相关数据设置成-1） stu:1-本科生 2-研究生
+void deleteScore(int stu, int id)
+{
+	SUG *pSUG = SUGHead;
+	SPG *pSPG = SPGHead;
+	int i;
+	if (stu == 1) //删除本科生
+	{
+		do
+		{
+			if (pSUG->id == id)
+			{
+				for (i = 0; i < 3; i++)
+					pSUG->score[i] = -1;
+				printf("学号为%d的本科生的所有成绩已设置为-1\n");
+				system("pause");
+				return;
+			}
+			else
+				pSUG = pSUG->next;
+		} while (pSUG != NULL);
+		if (pSUG == NULL)
+			printf("未找到学号为%d的本科生\n");
+	}
+	else //删除研究生
+	{
+		
 	}
 }
