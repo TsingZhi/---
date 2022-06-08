@@ -28,7 +28,7 @@ void inquireStu(int stu, int id);
 void PerformanceData_maintenance();
 
 /****************************************/
-//检查本科生成绩(数学、英语、C语言、总分)是否有无效成绩（-1），如果有则返回1， 否则返回0
+//检查本科生成绩(数学、英语、C语言)是否有无效成绩（-1），如果有则返回1， 否则返回0
 int checkSUGScore(SUG *pSUG)
 {
 	int i;
@@ -36,14 +36,14 @@ int checkSUGScore(SUG *pSUG)
 	{
 		if (pSUG->score[i] == -1)
 		{
-			if (pSUG->score[3] == -1)
-				printf("提示:学号为%d的本科生总成绩未计算\n", pSUG->id);
+			// if (pSUG->score[3] == -1)
+			// 	printf("提示:学号为%d的本科生总成绩未计算\n", pSUG->id);
 			return 1;
 		}
 	}
 	return 0;
 }
-//检查研究生成绩(综合课程、论文、总成绩)是否有无效成绩（-1），如果有则返回1， 否则返回0
+//检查研究生成绩(综合课程、论文)是否有无效成绩（-1），如果有则返回1， 否则返回0
 int checkSPGScore(SPG *pSPG)
 {
 	int i;
@@ -51,8 +51,8 @@ int checkSPGScore(SPG *pSPG)
 	{
 		if (pSPG->score[i] == -1)
 		{
-			if (pSPG->score[2] == -1)
-				printf("提示：学号为%d的研究生总成绩未计算\n");
+			// if (pSPG->score[2] == -1)
+			// 	printf("提示：学号为%d的研究生总成绩未计算\n");
 			return 1;
 		}
 	}
@@ -492,6 +492,10 @@ void inquireStu(int stu, int id)
 	}
 }
 
+
+
+
+
 /**成绩管理部分声明区
  * 全部完成后再复制到文件首部的声明区
  */
@@ -502,6 +506,9 @@ void modifyPerformanceData();
 void modifyScore(int stu, int id);
 void deletePerformanceData();
 void deleteScore(int stu, int id);
+void inquirePerformanceData();
+void inquireScore(int stu, int id);
+void calculatePerformanceData();
 
 //成绩数据管理菜单
 void PerformanceData_maintenance()
@@ -512,22 +519,24 @@ void PerformanceData_maintenance()
 	printf("2.修改：根据学号来修改任意学生的除学号外的其他成绩资料数据\n");
 	printf("3.删除：根据学号删除一个学生\n");
 	printf("4.查询：根据学号查询一个学生的成绩资料数据\n");
+	printf("5.计算：批量计算所有学生的总成绩、班级排名、校级排名。只有各项数据都为有效数据时（-1为无效数据），才能计算.\n");
 	while (1)
 	{
 		printf("输入选项:");
 		fflush(stdin);
 		scanf("%d", &option);
-		if (option < 1 || option >4)
+		if (option < 1 || option > 5)
 			printf("输入有误，请重新输入.\n");
 		else
 			break;
 	}
 	switch (option)
 	{
-	case 1:	inputPerformanceData();	break;
+	case 1:	inputPerformanceData();		break;
 	case 2:	modifyPerformanceData();	break;
-	case 3:  		break;
-	case 4:			break;
+	case 3: deletePerformanceData(); 	break;
+	case 4:	inquirePerformanceData();	break;
+	case 5: calculatePerformanceData();	break;
 	}
 }
 //输入成绩菜单
@@ -812,7 +821,7 @@ void deleteScore(int stu, int id)
 			{
 				for (i = 0; i < 3; i++)
 					pSUG->score[i] = -1;
-				printf("学号为%d的本科生的所有成绩已设置为-1\n");
+				printf("学号为%d的本科生的所有成绩已设置为-1\n", id);
 				system("pause");
 				return;
 			}
@@ -820,10 +829,191 @@ void deleteScore(int stu, int id)
 				pSUG = pSUG->next;
 		} while (pSUG != NULL);
 		if (pSUG == NULL)
-			printf("未找到学号为%d的本科生\n");
+		{
+			printf("未找到学号为%d的本科生,即将返回\n", id);
+			system("pause");
+		}
 	}
 	else //删除研究生
 	{
-		
+		do
+		{
+			if (pSPG->id == id)
+			{
+				for (i = 0; i < 2; i++)
+					pSPG->score[i] = -1;
+				printf("学号为%d的研究生的所有成绩已设置为-1\n", id);
+				system("pause");
+				return;
+			}
+			else
+				pSPG = pSPG->next;
+		} while (pSPG != NULL);
+		if (pSPG == NULL)
+		{
+			printf("未找到学号为%d的研究生,即将返回\n", id);
+			system("pause");
+		}
+	}
+}
+//查询成绩菜单
+void inquirePerformanceData()
+{
+	int stu, id;
+	printf("-----查询成绩菜单-----\n");
+	printf("查询何种学生成绩?\n");
+	printf("1-本科生\t2-研究生");
+	printf("输入选项:");
+	do
+	{
+		scanf("%d", &stu);
+		if (stu != 1 && stu != 2)
+			printf("输入有误，请重新输入:");
+	} while (stu != 1 && stu != 2);
+	printf("输入需要查找学生的id:");
+	scanf("%d", &id);
+	inquireScore(stu, id);
+}
+//根据学号查找学生成绩 stu:1-本科生 2-研究生 id:需要查找学生的学号
+void inquireScore(int stu, int id)
+{
+	SUG *pSUG = NULL;
+	SPG *pSPG = NULL;
+	if (stu == 1) //查找本科生
+	{
+		pSUG = SUGHead;
+		do
+		{
+			if (pSUG->id == id)
+			{
+				printf("已找到学号为%d的本科生的成绩信息\n", id);
+				printf("学号\t\t姓名\t\t数学\t\t英语\t\tC语言\t\t总成绩\t\t班排名\t\t校排名\n");
+				printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+					   id, pSUG->name, pSUG->score[0], pSUG->score[1],pSUG->score[2], 
+					   pSUG->score[3],pSUG->score[4],pSUG->score[5]);
+				system("pause");
+				return;
+			}
+			else
+				pSUG = pSUG->next;
+		} while (pSUG != NULL);
+		if (pSUG == NULL)
+		{
+			printf("未找到学号为%d的本科生的成绩信息,即将返回\n", id);
+			system("pause");
+			return;
+		}
+	}
+	else //查找研究生
+	{
+		pSPG = SPGHead;
+		do
+		{
+			if (pSPG->id == id)
+			{
+				printf("已找到学号为%d的研究生的成绩信息\n", id);
+				printf("学号\t\t姓名\t\t综合课程\t\t论文\t\t总成绩\t\t班排名\t\t校排名\n");
+				printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+					   id, pSPG->name, pSPG->score[0], pSPG->score[1],pSPG->score[2], 
+					   pSPG->score[3],pSPG->score[4]);
+				system("pause");
+				return;
+			}
+			else
+				pSPG = pSPG->next;
+		} while (pSPG != NULL);
+		if (pSPG == NULL)
+		{
+			printf("未找到学号为%d的研究生的成绩信息,即将返回\n", id);
+			system("pause");
+			return;
+		}
+	}
+}
+//计算成绩函数
+void calculatePerformanceData()
+{
+	void calculateSUGTotalScore();
+	void calculateSPGTotalScore();
+	SUG *pSUG = SUGHead, *psug;//小写为遍历用
+	SPG *pSPG = SPGHead, *pspg;
+	printf("正在计算所有学生成绩,请稍后……\n");
+	calculateSUGTotalScore();
+	while (pSUG != NULL)
+	{
+		if (checkSUGScore(pSUG)) //当前学生没有无效成绩
+		{
+			pSUG->score[4] = pSUG->score[5] = 1;
+			psug = SUGHead;
+			while (psug != NULL)
+			{
+				if (psug->score[3] > pSUG ->score[3])
+				{
+					if (strcmp(psug->class, pSUG->class) == 0)//二者在同一个班
+						pSUG->score[4]++; //当前学生班排名+1
+					else
+						pSUG->score[5]++; //当前学生校排名+1
+				}
+				psug = psug->next; //被比较节点后移
+			}
+		}
+		else
+			pSUG = pSUG->next;
+	}
+	printf("本科生成绩计算完毕\n");
+	printf("正在计算研究生成绩,请稍后……\n");
+	calculateSPGTotalScore();
+	while (pSPG != NULL)
+	{
+		if (checkSPGScore(pSPG))
+		{
+			pSPG->score[3] = pSPG->score[4] = 1;
+			pspg = SPGHead;
+			while (pspg != NULL)
+			{
+				if (pspg->score[2] > pSPG->score[2])
+				{
+					if (strcmp(pspg->class, pSPG->class) == 0)
+						pSPG->score[3]++;
+					else
+						pSPG->score[4]++;
+				}
+				pspg = pspg->next;
+			}
+		}
+		else
+			pSPG = pSPG->next;
+	}
+	printf("研究生成绩计算完毕\n");
+	system("pause");
+}
+//计算本科生总成绩
+void calculateSUGTotalScore()
+{
+	SUG *pSUG = SUGHead;
+	while (pSUG != NULL)
+	{
+		if (checkSUGScore(pSUG) == 0)
+		{
+			if (pSUG->score[3] == -1)
+				pSUG->score[3] = pSUG->score[0] + pSUG->score[1] + pSUG->score[2];
+		}
+		else
+			pSUG = pSUG->next;
+	}
+}
+//计算研究生总成绩
+void calculateSPGTotalScore()
+{
+	SPG *pSPG = SPGHead;
+	while (pSPG != NULL)
+	{
+		if (checkSPGScore(pSPG) == 0)
+		{
+			if (pSPG->score[2] == -1)
+				pSPG->score[2] = pSPG->score[0] + pSPG->score[1];
+		}
+		else
+			pSPG = pSPG->next;
 	}
 }
