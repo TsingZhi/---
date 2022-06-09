@@ -1,8 +1,7 @@
-/* åŒ…å«æ‰€æœ‰èœå•å±•ç¤ºå‡½æ•° */
-/*****************************************/
-/**å‡½æ•°å£°æ˜åŒºï¼Œæ¯å†™å®Œä¸€ä¸ªå°±æŠŠå‡½æ•°å¤´æ‹¿è¿›æ¥
- * æ³¨æ„ï¼šå¿…é¡»æ˜¯å®Œå…¨å®Œæˆçš„æ‰å†™è¿›æ¥ï¼ˆåŒ…æ‹¬å­å‡½æ•°ï¼‰
- * */
+/* °üº¬ËùÓĞ²Ëµ¥Õ¹Ê¾º¯Êı */
+
+
+/* ×Ô¶¨Òåº¯Êı */
 
 int checkSUGScore(SUG *pSUG);
 int checkSPGScore(SPG *pSPG);
@@ -12,6 +11,13 @@ void printSUGBaseData(SUG *pSUG);
 void printSPGBaseData(SPG *pSPG);
 void printSUGInfo(SUG *pSUG);
 void printSPGInfo(SPG *pSPG);
+void calculateSUGTotalScore();
+void calculateSPGTotalScore();
+
+/* ×Ô¶¨Òåº¯Êı */
+
+
+/* 1.A.»ù±¾Êı¾İ¹ÜÀíº¯ÊıÉùÃ÷ */
 
 void BaseData_maintenance();
 void addBaseData();
@@ -25,10 +31,56 @@ void deletePStu(int id);
 void inquireBaseData();
 void inquireStu(int stu, int id);
 
-void PerformanceData_maintenance();
+/* 1.A.»ù±¾Êı¾İ¹ÜÀíº¯ÊıÉùÃ÷ */
 
-/****************************************/
-//æ£€æŸ¥æœ¬ç§‘ç”Ÿæˆç»©(æ•°å­¦ã€è‹±è¯­ã€Cè¯­è¨€)æ˜¯å¦æœ‰æ— æ•ˆæˆç»©ï¼ˆ-1ï¼‰ï¼Œå¦‚æœæœ‰åˆ™è¿”å›1ï¼Œ å¦åˆ™è¿”å›0
+
+/* 1.B.³É¼¨¹ÜÀí²¿·ÖÉùÃ÷ */
+
+void PerformanceData_maintenance();
+void inputPerformanceData();
+void inputScore(int stu, int quantity);
+void modifyPerformanceData();
+void modifyScore(int stu, int id);
+void deletePerformanceData();
+void deleteScore(int stu, int id);
+void inquirePerformanceData();
+void inquireScore(int stu, int id);
+void calculatePerformanceData();
+
+/* 1.B.³É¼¨¹ÜÀí²¿·ÖÉùÃ÷ */
+
+
+/* 2.¼ÆËãÅÅÃû²¿·ÖÉùÃ÷ */
+
+void Calculate_rank();
+void calculateSUGRank();
+void calculateSPGRank();
+
+/* 2.¼ÆËãÅÅÃû²¿·ÖÉùÃ÷ */
+
+
+/* 3.ÅÅĞòÊä³ö²¿·ÖÉùÃ÷ */
+
+void Sort_print();
+
+/* 3.ÅÅĞòÊä³ö²¿·ÖÉùÃ÷ */
+
+
+/* 4.²éÑ¯¹¦ÄÜ²¿·ÖÉùÃ÷ */
+
+void Inquire_information();
+
+/* 4.²éÑ¯¹¦ÄÜ²¿·ÖÉùÃ÷ */
+
+
+/* 5.Í³¼Æ¹¦ÄÜ²Ëµ¥ÉùÃ÷ */
+
+void Performance_statistic();
+
+/* 5.Í³¼Æ¹¦ÄÜ²Ëµ¥ÉùÃ÷ */
+
+
+//¼ì²é±¾¿ÆÉú³É¼¨(ÊıÑ§¡¢Ó¢Óï¡¢CÓïÑÔ)ÊÇ·ñÓĞÎŞĞ§³É¼¨£¨-1£©£¬Èç¹ûÓĞÔò·µ»Ø1£¬ ·ñÔò·µ»Ø0
 int checkSUGScore(SUG *pSUG)
 {
 	int i;
@@ -36,14 +88,12 @@ int checkSUGScore(SUG *pSUG)
 	{
 		if (pSUG->score[i] == -1)
 		{
-			// if (pSUG->score[3] == -1)
-			// 	printf("æç¤º:å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿæ€»æˆç»©æœªè®¡ç®—\n", pSUG->id);
 			return 1;
 		}
 	}
 	return 0;
 }
-//æ£€æŸ¥ç ”ç©¶ç”Ÿæˆç»©(ç»¼åˆè¯¾ç¨‹ã€è®ºæ–‡)æ˜¯å¦æœ‰æ— æ•ˆæˆç»©ï¼ˆ-1ï¼‰ï¼Œå¦‚æœæœ‰åˆ™è¿”å›1ï¼Œ å¦åˆ™è¿”å›0
+//¼ì²éÑĞ¾¿Éú³É¼¨(×ÛºÏ¿Î³Ì¡¢ÂÛÎÄ)ÊÇ·ñÓĞÎŞĞ§³É¼¨£¨-1£©£¬Èç¹ûÓĞÔò·µ»Ø1£¬ ·ñÔò·µ»Ø0
 int checkSPGScore(SPG *pSPG)
 {
 	int i;
@@ -51,74 +101,72 @@ int checkSPGScore(SPG *pSPG)
 	{
 		if (pSPG->score[i] == -1)
 		{
-			// if (pSPG->score[2] == -1)
-			// 	printf("æç¤ºï¼šå­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿæ€»æˆç»©æœªè®¡ç®—\n");
 			return 1;
 		}
 	}
 	return 0;
 }
-//è¾“å‡ºæœ¬ç§‘ç”Ÿä¿¡æ¯ç»„æˆéƒ¨åˆ†
+//Êä³ö±¾¿ÆÉú»ù±¾ĞÅÏ¢×é³É²¿·Ö
 void printSUGTitle()
-{printf("å­¦å·\t\tå§“å\t\tæ€§åˆ«\t\tä¸“ä¸š\t\tç­çº§\t\tæ•°å­¦\t\tè‹±è¯­\t\tCè¯­è¨€\t\tæ€»åˆ†\t\tç­æ’å\t\tæ ¡æ’å\n");}
-//è¾“å‡ºä¸€ä¸ªæœ¬ç§‘ç”Ÿçš„åŸºæœ¬ä¿¡æ¯
+{printf("Ñ§ºÅ\tĞÕÃû\tĞÔ±ğ\t×¨Òµ\t\t°à¼¶\n");}
+//Êä³öÒ»¸ö±¾¿ÆÉúµÄ»ù±¾ĞÅÏ¢
 void printSUGBaseData(SUG *pSUG)
 {
 	if(pSUG->sex == 0)
-		printf("%d\t\t%s%\t\tå¥³\t\t%s\t\t%s\n", pSUG->id, pSUG->name, pSUG->profession, pSUG->class);
+		printf("%d\t%s\tÅ®\t%s\t%s\n", pSUG->id, pSUG->name, pSUG->profession, pSUG->class);
 	else
-		printf("%d\t\t%s%\t\tç”·\t\t%s\t\t%s\n", pSUG->id, pSUG->name, pSUG->profession, pSUG->class);
+		printf("%d\t%s\tÄĞ\t%s\t%s\n", pSUG->id, pSUG->name, pSUG->profession, pSUG->class);
 }
-//è¾“å‡ºä¸€ä¸ªæœ¬ç§‘ç”Ÿçš„å…¨éƒ¨ä¿¡æ¯
+//Êä³öÒ»¸ö±¾¿ÆÉúµÄÈ«²¿ĞÅÏ¢
 void printSUGInfo(SUG *pSUG)
 {
 	if (pSUG->sex == 0)
-		printf("%d\t\t%s\t\tå¥³\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+		printf("%d\t%s\tÅ®\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n",
 			   pSUG->id, pSUG->name, pSUG->profession, pSUG->class, pSUG->score[0], pSUG->score[1],
 			   pSUG->score[2], pSUG->score[3], pSUG->score[4], pSUG->score[5]);
 	else
-		printf("%d\t\t%s\t\tç”·\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+		printf("%d\t%s\tÄĞ\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n",
 			   pSUG->id, pSUG->name, pSUG->profession, pSUG->class, pSUG->score[0], pSUG->score[1],
 			   pSUG->score[2], pSUG->score[3], pSUG->score[4], pSUG->score[5]);
 }
-//è¾“å‡ºç ”ç©¶ç”Ÿä¿¡æ¯ç»„æˆéƒ¨åˆ†
+//Êä³öÑĞ¾¿Éú»ù±¾ĞÅÏ¢×é³É²¿·Ö
 void printSPGTitle()
-{printf("å­¦å·\t\tå§“å\t\tæ€§åˆ«\t\tä¸“ä¸š\t\tç­çº§\t\tç ”ç©¶æ–¹å‘\t\tå¯¼å¸ˆ\t\tç»¼åˆè¯¾ç¨‹\t\tè®ºæ–‡\t\tæ€»æˆç»©\t\tç­æ’å\t\tæ ¡æ’å\\n");}
-//è¾“å‡ºä¸€ä¸ªç ”ç©¶ç”Ÿçš„åŸºæœ¬ä¿¡æ¯
+{printf("Ñ§ºÅ\tĞÕÃû\tĞÔ±ğ\t×¨Òµ\t°à¼¶\tÑĞ¾¿·½Ïò\t\tµ¼Ê¦\\n");}
+//Êä³öÒ»¸öÑĞ¾¿ÉúµÄ»ù±¾ĞÅÏ¢
 void printSPGBaseData(SPG *pSPG)
 {
 	if (pSPG->sex == 0)
-		printf("%d\t\t%s\t\tå¥³\t\t%s\t\t%s\t\t%s\t\t%s\n",
+		printf("%d\t%s\tÅ®\t%s\t%s\t%s\t\t%s\n",
 		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
 	else
-		printf("%d\t\t%s\t\tç”·\t\t%s\t\t%s\t\t%s\t\t%s\n",
+		printf("%d\t%s\tÄĞ\t%s\t%s\t%s\t%s\n",
 		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
 }
-//è¾“å‡ºä¸€ä¸ªç ”ç©¶ç”Ÿçš„å…¨éƒ¨ä¿¡æ¯
+//Êä³öÒ»¸öÑĞ¾¿ÉúµÄÈ«²¿ĞÅÏ¢
 void printSPGInfo(SPG *pSPG)
 {
 	if (pSPG->sex == 0)
-		printf("%d\t\t%s\t\tå¥³\t\t%s\t\t%s\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+		printf("%d\t%s\tÅ®\t%s\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%d\n",
 		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher,
 		pSPG->score[0], pSPG->score[1], pSPG->score[2], pSPG->score[3], pSPG->score[4]);
 	else
-		printf("%d\t\t%s\t\tç”·\t\t%s\t\t%s\t\t%s\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
+		printf("%d\t%s\tÄĞ\t%s\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%d\n",
 		pSPG->id, pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher,
 		pSPG->score[0], pSPG->score[1], pSPG->score[2], pSPG->score[3], pSPG->score[4]);
 }
-//å­èœå•1ï¼šæ•°æ®ç»´æŠ¤
+//×Ó²Ëµ¥1£ºÊı¾İÎ¬»¤
 void Data_maintenance()
 {
 	int option;
-	printf("-------æ•°æ®ç»´æŠ¤èœå•-------\n");
-	printf("1:åŸºæœ¬èµ„æ–™æ•°æ® \t 2:æˆç»©æ•°æ®\n");
+	printf("-------Êı¾İÎ¬»¤²Ëµ¥-------\n");
+	printf("1:»ù±¾×ÊÁÏÊı¾İ \t 2:³É¼¨Êı¾İ\n");
 	while (1)
 	{
-		printf("é€‰æ‹©éœ€è¦ç®¡ç†çš„æ•°æ®:");
+		printf("Ñ¡ÔñĞèÒª¹ÜÀíµÄÊı¾İ:");
 		fflush(stdin);
 		scanf("%d", &option);
 		if (option != 1 && option != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥:");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
 		else
 			break;
 	}
@@ -128,26 +176,26 @@ void Data_maintenance()
 		BaseData_maintenance();
 		break;
 	default:
-		PerformanceData_maintenance();//æˆç»©æ•°æ®ç»´æŠ¤èœå•
+		PerformanceData_maintenance();//³É¼¨Êı¾İÎ¬»¤²Ëµ¥
 		break;
 	}
 }
-//åŸºæœ¬æ•°æ®ç»´æŠ¤èœå•
+//»ù±¾Êı¾İÎ¬»¤²Ëµ¥
 void BaseData_maintenance()
 {
 	int option;
-	printf("-------åŸºæœ¬æ•°æ®ç»´æŠ¤èœå•-------\n");
-	printf("1.æ·»åŠ : æ·»åŠ å­¦ç”ŸåŸºæœ¬èµ„æ–™æ•°æ®\n");
-	printf("2.ä¿®æ”¹ï¼šæ ¹æ®å­¦å·æ¥ä¿®æ”¹ä»»æ„å­¦ç”Ÿçš„é™¤å­¦å·å¤–çš„å…¶ä»–åŸºæœ¬èµ„æ–™æ•°æ®\n");
-	printf("3.åˆ é™¤ï¼šæ ¹æ®å­¦å·åˆ é™¤ä¸€ä¸ªå­¦ç”Ÿ\n");
-	printf("4.æŸ¥è¯¢ï¼šæ ¹æ®å­¦å·æŸ¥è¯¢ä¸€ä¸ªå­¦ç”Ÿçš„åŸºæœ¬èµ„æ–™æ•°æ®\n");
+	printf("-------»ù±¾Êı¾İÎ¬»¤²Ëµ¥-------\n");
+	printf("1.Ìí¼Ó: Ìí¼ÓÑ§Éú»ù±¾×ÊÁÏÊı¾İ\n");
+	printf("2.ĞŞ¸Ä£º¸ù¾İÑ§ºÅÀ´ĞŞ¸ÄÈÎÒâÑ§ÉúµÄ³ıÑ§ºÅÍâµÄÆäËû»ù±¾×ÊÁÏÊı¾İ\n");
+	printf("3.É¾³ı£º¸ù¾İÑ§ºÅÉ¾³ıÒ»¸öÑ§Éú\n");
+	printf("4.²éÑ¯£º¸ù¾İÑ§ºÅ²éÑ¯Ò»¸öÑ§ÉúµÄ»ù±¾×ÊÁÏÊı¾İ\n");
 	while (1)
 	{
-		printf("è¾“å…¥é€‰é¡¹:");
+		printf("ÊäÈëÑ¡Ïî:");
 		fflush(stdin);
 		scanf("%d", &option);
 		if (option < 1 || option >4)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥.\n");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
 		else
 			break;
 	}
@@ -159,38 +207,37 @@ void BaseData_maintenance()
 	case 4: inquireBaseData();	break;
 	}
 }
-//æ·»åŠ æ•°æ®çš„èœå•
+//Ìí¼ÓÊı¾İµÄ²Ëµ¥
 void addBaseData()
 {
 	int stuOption;
-	int quantity; //1è¡¨ç¤ºæ·»åŠ å•ä¸ªï¼Œ2è¡¨ç¤ºæ·»åŠ å¤šä¸ª
-	printf("æ·»åŠ æœ¬ç§‘ç”Ÿè¿˜æ˜¯ç ”ç©¶ç”Ÿï¼Ÿ\n");
-	printf("1:æœ¬ç§‘ç”Ÿ\t2:ç ”ç©¶ç”Ÿ");
+	int quantity; //1±íÊ¾Ìí¼Óµ¥¸ö£¬2±íÊ¾Ìí¼Ó¶à¸ö
+	printf("Ìí¼Ó±¾¿ÆÉú»¹ÊÇÑĞ¾¿Éú£¿\n");
+	printf("1:±¾¿ÆÉú\t2:ÑĞ¾¿Éú\n");
 	while (1)
 	{
-		printf("è¾“å…¥é€‰é¡¹:");
+		printf("ÊäÈëÑ¡Ïî:");
 		scanf("%d", &stuOption);
 		if (stuOption != 1 && stuOption != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥:");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
 		else
 			break;
 	}
-	printf("æ·»åŠ å•ä¸ªè¿˜æ˜¯å¤šä¸ª?\n");
-	printf("1.å•ä¸ª \t 2.å¤šä¸ª");
+	printf("Ìí¼Óµ¥¸ö»¹ÊÇ¶à¸ö?\n");
+	printf("1.µ¥¸ö \t 2.¶à¸ö\n");
 	while (1)
 	{
-		printf("è¾“å…¥é€‰é¡¹:");
+		printf("ÊäÈëÑ¡Ïî:");
 		scanf("%d", &quantity);
 		if (quantity != 1 && quantity != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥:");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
 		else
 			break;
 	}
 	addStudent(stuOption, quantity);
 }
-
-/**å‚æ•°è¯´æ˜ï¼šstuä¸ºè¦æ·»åŠ çš„å­¦ç”Ÿç±»å‹ï¼Œ 1-æœ¬ç§‘ç”Ÿï¼Œ2-ç ”ç©¶ç”Ÿ;
- * quantityä¸ºæ·»åŠ æ¨¡å¼ï¼Œ1-æ·»åŠ å•ä¸ªï¼Œ2-æ·»åŠ å¤šä¸ªï¼ˆé‡å¤æ‰§è¡Œå•ä¸ªæ·»åŠ )
+/**²ÎÊıËµÃ÷£ºstuÎªÒªÌí¼ÓµÄÑ§ÉúÀàĞÍ£¬ 1-±¾¿ÆÉú£¬2-ÑĞ¾¿Éú;
+ * quantityÎªÌí¼ÓÄ£Ê½£¬1-Ìí¼Óµ¥¸ö£¬2-Ìí¼Ó¶à¸ö£¨ÖØ¸´Ö´ĞĞµ¥¸öÌí¼Ó)
  * */
 void addStudent(int stu, int quantity)
 {
@@ -200,20 +247,20 @@ void addStudent(int stu, int quantity)
 	if(stu == 1)
 	{
 		if (quantity == 1)
-			printf("è¾“å…¥è¯¥æœ¬ç§‘ç”Ÿçš„å§“å æ€§åˆ«(0-å¥³ 1-ç”· ) ä¸“ä¸š ç­çº§:(æ€§åˆ«è¾“å…¥-1ä»¥ç»“æŸ)\n");
+			printf("ÊäÈë¸Ã±¾¿ÆÉúµÄĞÕÃû ĞÔ±ğ(0-Å® 1-ÄĞ ) ×¨Òµ °à¼¶:(ĞÔ±ğÊäÈë-1ÒÔ½áÊø)\n");
 		else
-			printf("è¾“å…¥è‹¥å¹²æœ¬ç§‘ç”Ÿçš„å§“å æ€§åˆ«(0-å¥³ 1-ç”·) ä¸“ä¸š ç­çº§:(æ€§åˆ«è¾“å…¥-1ä»¥ç»“æŸ)\n");
+			printf("ÊäÈëÈô¸É±¾¿ÆÉúµÄĞÕÃû ĞÔ±ğ(0-Å® 1-ÄĞ) ×¨Òµ °à¼¶:(ĞÔ±ğÊäÈë-1ÒÔ½áÊø)\n");
 		fflush(stdin);
 		while (1)
 		{
-			printf("è¾“å…¥ç¬¬%dä¸ªæœ¬ç§‘ç”Ÿ:", number + 1);
+			printf("ÊäÈëµÚ%d¸ö±¾¿ÆÉú:", number + 1);
 			newSUG = newSUGNode();
 			scanf("%s%d%s%s", &newSUG->name, &newSUG->sex, &newSUG->profession, &newSUG->class);
 			if (newSUG->sex == -1) break;
-			if (SUGHead == NULL) //æœ¬ç§‘ç”Ÿé“¾è¡¨æ— æ•°æ®æ—¶
+			if (SUGHead == NULL) //±¾¿ÆÉúÁ´±íÎŞÊı¾İÊ±
 			{
-				SUGHead = newSUG; //ç½®è¯¥èŠ‚ç‚¹ä¸ºå¤´èŠ‚ç‚¹
-				SUGpage[0] = *SUGHead; //æœ¬ç§‘ç”Ÿå¤´èŠ‚ç‚¹å­˜å…¥ç¿»é¡µæ•°ç»„
+				SUGHead = newSUG; //ÖÃ¸Ã½ÚµãÎªÍ·½Úµã
+				SUGpage[0] = *SUGHead; //±¾¿ÆÉúÍ·½Úµã´æÈë·­Ò³Êı×é
 				SUGHead->id = 1;
 				SUGTail = newSUG;
 			}
@@ -221,108 +268,108 @@ void addStudent(int stu, int quantity)
 			{
 				newSUG->id = SUGTail->id + 1;
 				if ((newSUG->id % 10) == 1)
-					SUGpage[newSUG->id / 10] = *newSUG; //æ»¡è¶³æ¡ä»¶åˆ™å­˜å…¥ç¿»é¡µæ•°ç»„
+					SUGpage[newSUG->id / 10] = *newSUG; //Âú×ãÌõ¼şÔò´æÈë·­Ò³Êı×é
 				SUGTail->next = newSUG;
 				SUGTail = newSUG;
 			}
 			number++;
 			if(quantity == 1) break;
 		}
-	printf("æ·»åŠ å®Œæ¯•ï¼Œå…±æ·»åŠ %dæ¡æœ¬ç§‘ç”Ÿæ•°æ®\n", number);
+	printf("Ìí¼ÓÍê±Ï£¬¹²Ìí¼Ó%dÌõ±¾¿ÆÉúÊı¾İ\n", number);
 	}
 	else
 	{
 		if (quantity == 1)
-			printf("è¾“å…¥è¯¥ç ”ç©¶ç”Ÿçš„å§“å æ€§åˆ«(0-å¥³ 1-ç”·) ä¸“ä¸š ç­çº§ ç ”ç©¶æ–¹å‘ å¯¼å¸ˆ:(æ€§åˆ«è¾“å…¥-1ä»¥ç»“æŸ)\n");
+			printf("ÊäÈë¸ÃÑĞ¾¿ÉúµÄĞÕÃû ĞÔ±ğ(0-Å® 1-ÄĞ) ×¨Òµ °à¼¶ ÑĞ¾¿·½Ïò µ¼Ê¦:(ĞÔ±ğÊäÈë-1ÒÔ½áÊø)\n");
 		else
-			printf("è¾“å…¥è‹¥å¹²ç ”ç©¶ç”Ÿçš„å§“å æ€§åˆ«(0-å¥³ 1-ç”·) ä¸“ä¸š ç­çº§ ç ”ç©¶æ–¹å‘ å¯¼å¸ˆ:(æ€§åˆ«è¾“å…¥-1ä»¥ç»“æŸ)\n");
+			printf("ÊäÈëÈô¸ÉÑĞ¾¿ÉúµÄĞÕÃû ĞÔ±ğ(0-Å® 1-ÄĞ) ×¨Òµ °à¼¶ ÑĞ¾¿·½Ïò µ¼Ê¦:(ĞÔ±ğÊäÈë-1ÒÔ½áÊø)\n");
 		fflush(stdin);
 		while (1)
 		{
-			printf("è¾“å…¥ç¬¬%dä¸ªå­¦ç”Ÿ:", number + 1);
+			printf("ÊäÈëµÚ%d¸öÑ§Éú:", number + 1);
 			newSPG = newSPGNode();
 			scanf("%s%d%s%s%s%s", &newSPG->name, &newSPG->sex, &newSPG->profession,
 				  &newSPG->class, &newSPG->direction, &newSPG->teacher);
 			if (newSPG->sex == -1) break;
-			if (SPGHead == NULL) //ç ”ç©¶ç”Ÿé“¾è¡¨æ— æ•°æ®æ—¶
+			if (SPGHead == NULL) //ÑĞ¾¿ÉúÁ´±íÎŞÊı¾İÊ±
 			{
-				SPGHead = newSPG; //ç½®è¯¥èŠ‚ç‚¹ä¸ºå¤´èŠ‚ç‚¹
+				SPGHead = newSPG; //ÖÃ¸Ã½ÚµãÎªÍ·½Úµã
 				SPGHead->id = 1;
-				SPGPage[0] = *newSPG; //å­˜å…¥ç¿»é¡µæ•°ç»„
+				SPGPage[0] = *newSPG; //´æÈë·­Ò³Êı×é
 				SPGTail = newSPG;
 			}
 			else
 			{
 				newSPG->id = SPGTail->id + 1;
 				if ((newSPG->id % 10) == 1)
-					SPGPage[newSPG->id / 10] = *newSPG; //æ»¡è¶³æ¡ä»¶åˆ™å­˜å…¥ç¿»é¡µæ•°ç»„
+					SPGPage[newSPG->id / 10] = *newSPG; //Âú×ãÌõ¼şÔò´æÈë·­Ò³Êı×é
 				SPGTail->next = newSPG;
 				SPGTail = newSPG;
 			}
 			number++;
 			if(quantity == 1) break;
 		}
-	printf("æ·»åŠ å®Œæ¯•ï¼Œå…±æ·»åŠ %dæ¡ç ”ç©¶ç”Ÿæ•°æ®\n", number);
+	printf("Ìí¼ÓÍê±Ï£¬¹²Ìí¼Ó%dÌõÑĞ¾¿ÉúÊı¾İ\n", number);
 	}
 }
-//æ•°æ®ä¿®æ”¹èœå• ç”¨äºè¾“å…¥å­¦ç”Ÿç±»å‹åŠå­¦å·
+//Êı¾İĞŞ¸Ä²Ëµ¥ ÓÃÓÚÊäÈëÑ§ÉúÀàĞÍ¼°Ñ§ºÅ
 void modifyBaseData()
 {
 	int id, option;
-	printf("-------æ•°æ®ä¿®æ”¹èœå•-------\n");
-	printf("éœ€è¦ä¿®æ”¹æœ¬ç§‘ç”Ÿè¿˜æ˜¯ç ”ç©¶ç”Ÿï¼Ÿ\n");
-	printf("1.æœ¬ç§‘ç”Ÿ \t 2.ç ”ç©¶ç”Ÿ\n");
+	printf("-------Êı¾İĞŞ¸Ä²Ëµ¥-------\n");
+	printf("ĞèÒªĞŞ¸Ä±¾¿ÆÉú»¹ÊÇÑĞ¾¿Éú£¿\n");
+	printf("1.±¾¿ÆÉú \t 2.ÑĞ¾¿Éú\n");
 	while (1)
 	{
-		printf("è¾“å…¥é€‰é¡¹:");
+		printf("ÊäÈëÑ¡Ïî:");
 		fflush(stdin);
 		scanf("%d", &option);
 		if (option != 1 && option != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥.\n");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
 		else
 			break;
 	}
-	printf("è¾“å…¥å­¦å·:");
+	printf("ÊäÈëÑ§ºÅ:");
 	scanf("%d", &id);
 	modifyStudent(option, id);
 }
-//å‚æ•°è¯´æ˜:stuä¸ºå­¦ç”Ÿç±»å‹  1-æœ¬ç§‘ç”Ÿ 2-ç ”ç©¶ç”Ÿ; id:å¾…ä¿®æ”¹å­¦ç”Ÿçš„å­¦å·
+//²ÎÊıËµÃ÷:stuÎªÑ§ÉúÀàĞÍ  1-±¾¿ÆÉú 2-ÑĞ¾¿Éú; id:´ıĞŞ¸ÄÑ§ÉúµÄÑ§ºÅ
 void modifyStudent(int stu, int id)
 {
 	SUG *pSUG = NULL;
 	SPG *pSPG = NULL;
-	int flag = 0; //æŸ¥æ‰¾æˆåŠŸæ ‡å¿—
-	if (stu == 1) //ä¿®æ”¹æœ¬ç§‘ç”Ÿ
+	int flag = 0; //²éÕÒ³É¹¦±êÖ¾
+	if (stu == 1) //ĞŞ¸Ä±¾¿ÆÉú
 	{
 		if (SUGHead == NULL)
 		{
-			printf("æ— æœ¬ç§‘ç”Ÿæ•°æ®å¯ä¿®æ”¹ï¼Œè¯·å…ˆæ·»åŠ ä¸€æ¡æœ¬ç§‘ç”Ÿæ•°æ®\n");
+			printf("ÎŞ±¾¿ÆÉúÊı¾İ¿ÉĞŞ¸Ä£¬ÇëÏÈÌí¼ÓÒ»Ìõ±¾¿ÆÉúÊı¾İ\n");
 			return;
 		}
 		for (pSUG = SUGHead; pSUG != NULL; pSUG = pSUG->next)
 		{
-			if (pSUG->id == id) //æŸ¥æ‰¾æˆåŠŸ
+			if (pSUG->id == id) //²éÕÒ³É¹¦
 			{
-				flag = 1; //ä¿®æ”¹æŸ¥æ‰¾æ ‡å¿—
-				printf("å­¦å·ä¸º%dçš„æœ¬ç§‘ç”ŸåŸºæœ¬èµ„æ–™å¦‚ä¸‹:\n", id);
+				flag = 1; //ĞŞ¸Ä²éÕÒ±êÖ¾
+				printf("Ñ§ºÅÎª%dµÄ±¾¿ÆÉú»ù±¾×ÊÁÏÈçÏÂ:\n", id);
 				if (pSUG->sex == 0)
-					printf("%-5s å¥³ %-10s %-5s", pSUG->name, pSUG->profession, pSUG->class);
+					printf("%-5s Å® %-10s %-5s\n", pSUG->name, pSUG->profession, pSUG->class);
 				else
-					printf("%-5s ç”· %-10s %-5s", pSUG->name, pSUG->profession, pSUG->class);
-				printf("ä¾æ¬¡è¾“å…¥å§“å æ€§åˆ«ï¼ˆ0ä¸ºå¥³1ä¸ºç”·ï¼‰ ä¸“ä¸š ç­çº§ä»¥è¦†ç›–:\n");
+					printf("%-5s ÄĞ %-10s %-5s\n", pSUG->name, pSUG->profession, pSUG->class);
+				printf("ÒÀ´ÎÊäÈëĞÕÃû ĞÔ±ğ£¨0ÎªÅ®1ÎªÄĞ£© ×¨Òµ °à¼¶ÒÔ¸²¸Ç:\n");
 				scanf("%s%d%s%d", &pSUG->name, &pSUG->sex, &pSUG->profession, &pSUG->class);
-				printf("ä¿®æ”¹å­¦å·ä¸º%dçš„æœ¬ç§‘ç”ŸåŸºæœ¬èµ„æ–™æˆåŠŸ\n", id);
+				printf("ĞŞ¸ÄÑ§ºÅÎª%dµÄ±¾¿ÆÉú»ù±¾×ÊÁÏ³É¹¦\n", id);
 				return;
 			}
 		}
-		if (flag == 0) //æŸ¥æ‰¾å¤±è´¥
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿï¼Œè¯·æ£€æŸ¥æ˜¯å¦æœ‰è¯¥å­¦ç”Ÿ\n", id);
+		if (flag == 0) //²éÕÒÊ§°Ü
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄ±¾¿ÆÉú£¬Çë¼ì²éÊÇ·ñÓĞ¸ÃÑ§Éú\n", id);
 	}
-	else //ä¿®æ”¹ç ”ç©¶ç”Ÿ
+	else //ĞŞ¸ÄÑĞ¾¿Éú
 	{
 		if (SPGHead == NULL)
 		{
-			printf("æ— ç ”ç©¶ç”Ÿæ•°æ®å¯ä¿®æ”¹ï¼Œè¯·å…ˆæ·»åŠ ä¸€æ¡ç ”ç©¶ç”Ÿæ•°æ®\n");
+			printf("ÎŞÑĞ¾¿ÉúÊı¾İ¿ÉĞŞ¸Ä£¬ÇëÏÈÌí¼ÓÒ»ÌõÑĞ¾¿ÉúÊı¾İ\n");
 			return;
 		}
 		for (pSPG = SPGHead; pSPG != NULL; pSPG = pSPG->next)
@@ -330,86 +377,86 @@ void modifyStudent(int stu, int id)
 			if (pSPG->id == id)
 			{
 				flag = 1;
-				printf("å­¦å·ä¸º%dçš„ç ”ç©¶ç”ŸåŸºæœ¬èµ„æ–™å¦‚ä¸‹:\n", id);
+				printf("Ñ§ºÅÎª%dµÄÑĞ¾¿Éú»ù±¾×ÊÁÏÈçÏÂ:\n", id);
 				if (pSPG->sex == 0)
-					printf("%-5s å¥³ %-10s %-5s %-10s %-5s", pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
+					printf("%-5s Å® %-10s %-5s %-10s %-5s\n", pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
 				else
-					printf("%-5s ç”· %-10s %-5s %-10s %-5s", pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
-				printf("ä¾æ¬¡è¾“å…¥å§“å æ€§åˆ«ï¼ˆ0ä¸ºå¥³1ä¸ºç”·ï¼‰ ä¸“ä¸š ç­çº§ ç ”ç©¶æ–¹å‘ å¯¼å¸ˆä»¥è¦†ç›–:\n");
+					printf("%-5s ÄĞ %-10s %-5s %-10s %-5s\n", pSPG->name, pSPG->profession, pSPG->class, pSPG->direction, pSPG->teacher);
+				printf("ÒÀ´ÎÊäÈëĞÕÃû ĞÔ±ğ£¨0ÎªÅ®1ÎªÄĞ£© ×¨Òµ °à¼¶ ÑĞ¾¿·½Ïò µ¼Ê¦ÒÔ¸²¸Ç:\n");
 				scanf("%s%d%s%d", &pSPG->name, &pSPG->sex, &pSPG->profession, &pSPG->class, &pSPG->direction, &pSPG->teacher);
-				printf("ä¿®æ”¹å­¦å·ä¸º%dçš„ç ”ç©¶ç”ŸåŸºæœ¬èµ„æ–™æˆåŠŸ\n", id);
+				printf("ĞŞ¸ÄÑ§ºÅÎª%dµÄÑĞ¾¿Éú»ù±¾×ÊÁÏ³É¹¦\n", id);
 				return;
 			}
 		}
 		if (flag == 0)
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿï¼Œè¯·æ£€æŸ¥æ˜¯å¦æœ‰è¯¥å­¦ç”Ÿ\n", id);
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄÑĞ¾¿Éú£¬Çë¼ì²éÊÇ·ñÓĞ¸ÃÑ§Éú\n", id);
 	}
 }
-//åˆ é™¤æ•°æ®èœå•
+//É¾³ıÊı¾İ²Ëµ¥
 void deleteBaseData()
 {
 	int stu, id;
-	printf("----------åˆ é™¤æ•°æ®èœå•----------\n");
-	printf("åˆ é™¤æœ¬ç§‘ç”Ÿè¿˜æ˜¯ç ”ç©¶ç”Ÿçš„æ•°æ®ï¼Ÿ");
-	printf("1-æœ¬ç§‘ç”Ÿ 2-ç ”ç©¶ç”Ÿ");
+	printf("----------É¾³ıÊı¾İ²Ëµ¥----------\n");
+	printf("É¾³ı±¾¿ÆÉú»¹ÊÇÑĞ¾¿ÉúµÄÊı¾İ£¿");
+	printf("1-±¾¿ÆÉú 2-ÑĞ¾¿Éú");
 	scanf("%d", &stu);
-	printf("è¾“å…¥è¢«åˆ é™¤å­¦ç”Ÿçš„å­¦å·:");
+	printf("ÊäÈë±»É¾³ıÑ§ÉúµÄÑ§ºÅ:");
 	scanf("%d", &id);
 	deleteStudent(stu, id);
 }
-//åˆ é™¤æ•°æ®å‡½æ•°:å­¦å·ç›¸ç¬¦åˆ™é‡Šæ”¾è¯¥èŠ‚ç‚¹å†…å­˜
+//É¾³ıÊı¾İº¯Êı:Ñ§ºÅÏà·ûÔòÊÍ·Å¸Ã½ÚµãÄÚ´æ
 void deleteStudent(int stu, int id)
 {
 	if (stu == 1)
-		deleteUStu(id); // åˆ é™¤å­¦å·ä¸ºidçš„æœ¬ç§‘ç”Ÿ
+		deleteUStu(id); // É¾³ıÑ§ºÅÎªidµÄ±¾¿ÆÉú
 	else
-		deletePStu(id); // åˆ é™¤å­¦å·ä¸ºidçš„ç ”ç©¶ç”Ÿ
+		deletePStu(id); // É¾³ıÑ§ºÅÎªidµÄÑĞ¾¿Éú
 }
-//æ ¹æ®å­¦å·åˆ é™¤ä¸€ä¸ªæœ¬ç§‘ç”Ÿï¼ˆé‡Šæ”¾èŠ‚ç‚¹å†…å­˜ï¼‰
+//¸ù¾İÑ§ºÅÉ¾³ıÒ»¸ö±¾¿ÆÉú£¨ÊÍ·Å½ÚµãÄÚ´æ£©
 void deleteUStu(int id)
 {
 	SUG *pFront, *pBehind, *temp = NULL;
 	pFront = SUGHead;
 	pBehind = pFront->next;
-	if (pFront->id == id) //é“¾è¡¨å¤´èŠ‚ç‚¹å°±æ˜¯è¦åˆ é™¤çš„å¯¹è±¡æ—¶
+	if (pFront->id == id) //Á´±íÍ·½Úµã¾ÍÊÇÒªÉ¾³ıµÄ¶ÔÏóÊ±
 	{
 		temp = pFront;
 		pFront = pFront->next;
 		free(temp);
-		printf("è¯¥æœ¬ç§‘ç”Ÿå·²è¢«åˆ é™¤\n");
+		printf("¸Ã±¾¿ÆÉúÒÑ±»É¾³ı\n");
 		return;
 	}
-	while(pBehind != NULL && pBehind->id != id) //ä½¿ç”¨pBehindå¯»æ‰¾éœ€è¦åˆ é™¤çš„èŠ‚ç‚¹
+	while(pBehind != NULL && pBehind->id != id) //Ê¹ÓÃpBehindÑ°ÕÒĞèÒªÉ¾³ıµÄ½Úµã
 	{
 		pFront = pFront->next;
 		pBehind = pBehind->next;
 	}
-	if(pBehind == NULL)//æœªæ‰¾åˆ°è¢«åˆ é™¤çš„å¯¹è±¡,è¿”å›
+	if(pBehind == NULL)//Î´ÕÒµ½±»É¾³ıµÄ¶ÔÏó,·µ»Ø
 	{
-		printf("æœªæ‰¾åˆ°è¦è¢«åˆ é™¤çš„å¯¹è±¡\n");
+		printf("Î´ÕÒµ½Òª±»É¾³ıµÄ¶ÔÏó\n");
 		return;
 	}
-	else//æ­¤æ—¶pBehindå³éœ€è¦åˆ é™¤çš„å¯¹è±¡
+	else//´ËÊ±pBehind¼´ĞèÒªÉ¾³ıµÄ¶ÔÏó
 	{
 		temp = pBehind;
 		pBehind = pBehind->next;
 		pFront->next = pBehind;
 		free(temp);
-		printf("è¯¥æœ¬ç§‘ç”Ÿå·²è¢«åˆ é™¤\n");
+		printf("¸Ã±¾¿ÆÉúÒÑ±»É¾³ı\n");
 	}
 }
-//æ ¹æ®å­¦å·åˆ é™¤ä¸€ä¸ªç ”ç©¶ç”Ÿï¼ˆé‡Šæ”¾èŠ‚ç‚¹å†…å­˜ï¼‰
+//¸ù¾İÑ§ºÅÉ¾³ıÒ»¸öÑĞ¾¿Éú£¨ÊÍ·Å½ÚµãÄÚ´æ£©
 void deletePStu(int id)
 {
 	SPG *pFront, *pBehind, *temp = NULL;
 	pFront = SPGHead;
 	pBehind = pFront->next;
-	if (pFront->id == id) //é“¾è¡¨å¤´èŠ‚ç‚¹å°±æ˜¯è¦åˆ é™¤çš„å¯¹è±¡æ—¶
+	if (pFront->id == id) //Á´±íÍ·½Úµã¾ÍÊÇÒªÉ¾³ıµÄ¶ÔÏóÊ±
 	{
 		temp = pFront;
 		pFront = pFront->next;
 		free(temp);
-		printf("è¯¥ç ”ç©¶ç”Ÿå·²åˆ é™¤\n");
+		printf("¸ÃÑĞ¾¿ÉúÒÑÉ¾³ı\n");
 		return;
 	}
 	while(pBehind != NULL && pBehind->id != id)
@@ -417,73 +464,73 @@ void deletePStu(int id)
 		pFront = pFront->next;
 		pBehind = pBehind->next;
 	}
-	if(pBehind == NULL)//æœªæ‰¾åˆ°è¢«åˆ é™¤çš„å¯¹è±¡,è¿”å›
+	if(pBehind == NULL)//Î´ÕÒµ½±»É¾³ıµÄ¶ÔÏó,·µ»Ø
 	{
-		printf("æœªæ‰¾åˆ°è¦è¢«åˆ é™¤çš„å¯¹è±¡\n");
+		printf("Î´ÕÒµ½Òª±»É¾³ıµÄ¶ÔÏó\n");
 		return;
 	}
-	else//æ­¤æ—¶pBehindå³éœ€è¦åˆ é™¤çš„å¯¹è±¡
+	else//´ËÊ±pBehind¼´ĞèÒªÉ¾³ıµÄ¶ÔÏó
 	{
 		temp = pBehind;
 		pBehind = pBehind->next;
 		pFront->next = pBehind;
 		free(temp);
-		printf("è¯¥ç ”ç©¶ç”Ÿå·²è¢«åˆ é™¤\n");
+		printf("¸ÃÑĞ¾¿ÉúÒÑ±»É¾³ı\n");
 	}
 }
-//æŸ¥è¯¢æ•°æ®èœå• 
+//²éÑ¯Êı¾İ²Ëµ¥ 
 void inquireBaseData()
 {
 	int stu, id;
-	printf("----------æŸ¥è¯¢æ•°æ®èœå•----------\n");
-	printf("æŸ¥è¯¢æœ¬ç§‘ç”Ÿè¿˜æ˜¯ç ”ç©¶ç”Ÿçš„æ•°æ®?\n");
-	printf("1-æœ¬ç§‘ç”Ÿ\t2-ç ”ç©¶ç”Ÿ\n");
-	printf("è¯·è¾“å…¥:");
+	printf("----------²éÑ¯Êı¾İ²Ëµ¥----------\n");
+	printf("²éÑ¯±¾¿ÆÉú»¹ÊÇÑĞ¾¿ÉúµÄÊı¾İ?\n");
+	printf("1-±¾¿ÆÉú\t2-ÑĞ¾¿Éú\n");
+	printf("ÇëÊäÈë:");
 	scanf("%d", &stu);
 	while (stu != 1 && stu != 2)
 	{
-		printf("æ„å¤–çš„é€‰é¡¹.è¯·é‡æ–°è¾“å…¥:");
+		printf("ÒâÍâµÄÑ¡Ïî.ÇëÖØĞÂÊäÈë:");
 		scanf("%d", &stu);
 	}
-	printf("è¯·è¾“å…¥éœ€è¦æŸ¥æ‰¾å­¦ç”Ÿçš„å­¦å·:");
+	printf("ÇëÊäÈëĞèÒª²éÕÒÑ§ÉúµÄÑ§ºÅ:");
 	scanf("%d", &id);
 	inquireStu(stu, id);
 }
-//æ ¹æ®æ¥æ”¶çš„å­¦ç”Ÿç±»å‹å’Œå­¦å·ï¼ˆå½¢å‚ï¼‰è¿›è¡ŒæŸ¥æ‰¾å¹¶è¾“å‡ºåŸºæœ¬æ•°æ®
+//¸ù¾İ½ÓÊÕµÄÑ§ÉúÀàĞÍºÍÑ§ºÅ£¨ĞÎ²Î£©½øĞĞ²éÕÒ²¢Êä³ö»ù±¾Êı¾İ
 void inquireStu(int stu, int id)
 {
 	SUG *pSUG = SUGHead;
 	SPG *pSPG = SPGHead;
-	if (stu == 1) //æŸ¥æ‰¾æœ¬ç§‘ç”Ÿæ•°æ®
+	if (stu == 1) //²éÕÒ±¾¿ÆÉúÊı¾İ
 	{
 		do
 		{
 			if (pSUG->id == id)
 			{
-				system("cls");
-				printf("æŸ¥æ‰¾æˆåŠŸï¼Œå­¦å·ä¸º%dçš„æœ¬ç§‘ç”ŸåŸºæœ¬æ•°æ®å¦‚ä¸‹:\n");
+				// system("cls");
+				printf("²éÕÒ³É¹¦£¬Ñ§ºÅÎª%dµÄ±¾¿ÆÉú»ù±¾Êı¾İÈçÏÂ:\n", id);
 				printSUGTitle();
 				printSUGBaseData(pSUG);
 				if (checkSUGScore(pSUG) == 1)
-					printf("æç¤º:å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿæˆç»©å­˜åœ¨æ— æ•ˆæ•°æ®ï¼Œè¯·æ£€æŸ¥\n", id);
+					printf("ÌáÊ¾:Ñ§ºÅÎª%dµÄ±¾¿ÆÉú³É¼¨´æÔÚÎŞĞ§Êı¾İ£¬Çë¼ì²é\n", id);
 				return;
 			}
 			else
 				pSUG = pSUG->next;
 		} while (pSUG->id != id);
 	}
-	else //æŸ¥æ‰¾ç ”ç©¶ç”Ÿæ•°æ®
+	else //²éÕÒÑĞ¾¿ÉúÊı¾İ
 	{
 		do
 		{
 			if (pSPG->id == id)
 			{
 				system("cls");
-				printf("æŸ¥æ‰¾æˆåŠŸï¼Œå­¦å·ä¸º%dçš„ç ”ç©¶ç”ŸåŸºæœ¬æ•°æ®å¦‚ä¸‹:\n");
+				printf("²éÕÒ³É¹¦£¬Ñ§ºÅÎª%dµÄÑĞ¾¿Éú»ù±¾Êı¾İÈçÏÂ:\n", id);
 				printSPGTitle();
 				printSPGBaseData(pSPG);
 				if (checkSPGScore(pSPG) == 1)
-					printf("æç¤º:å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿæˆç»©å­˜åœ¨æ— æ•ˆæ•°æ®ï¼Œè¯·æ£€æŸ¥\n", id);
+					printf("ÌáÊ¾:Ñ§ºÅÎª%dµÄÑĞ¾¿Éú³É¼¨´æÔÚÎŞĞ§Êı¾İ£¬Çë¼ì²é\n", id);
 				return;
 			}
 			else
@@ -492,41 +539,23 @@ void inquireStu(int stu, int id)
 	}
 }
 
-
-
-
-
-/**æˆç»©ç®¡ç†éƒ¨åˆ†å£°æ˜åŒº
- * å…¨éƒ¨å®Œæˆåå†å¤åˆ¶åˆ°æ–‡ä»¶é¦–éƒ¨çš„å£°æ˜åŒº
- */
-
-void inputPerformanceData();
-void inputScore(int stu, int quantity);
-void modifyPerformanceData();
-void modifyScore(int stu, int id);
-void deletePerformanceData();
-void deleteScore(int stu, int id);
-void inquirePerformanceData();
-void inquireScore(int stu, int id);
-void calculatePerformanceData();
-
-//æˆç»©æ•°æ®ç®¡ç†èœå•
+//³É¼¨Êı¾İ¹ÜÀí²Ëµ¥
 void PerformanceData_maintenance()
 {
 	int option;
-	printf("-------æˆç»©æ•°æ®ç»´æŠ¤èœå•-------\n");
-	printf("1.æ·»åŠ : æ·»åŠ å­¦ç”Ÿæˆç»©èµ„æ–™æ•°æ®\n");
-	printf("2.ä¿®æ”¹ï¼šæ ¹æ®å­¦å·æ¥ä¿®æ”¹ä»»æ„å­¦ç”Ÿçš„é™¤å­¦å·å¤–çš„å…¶ä»–æˆç»©èµ„æ–™æ•°æ®\n");
-	printf("3.åˆ é™¤ï¼šæ ¹æ®å­¦å·åˆ é™¤ä¸€ä¸ªå­¦ç”Ÿ\n");
-	printf("4.æŸ¥è¯¢ï¼šæ ¹æ®å­¦å·æŸ¥è¯¢ä¸€ä¸ªå­¦ç”Ÿçš„æˆç»©èµ„æ–™æ•°æ®\n");
-	printf("5.è®¡ç®—ï¼šæ‰¹é‡è®¡ç®—æ‰€æœ‰å­¦ç”Ÿçš„æ€»æˆç»©ã€ç­çº§æ’åã€æ ¡çº§æ’åã€‚åªæœ‰å„é¡¹æ•°æ®éƒ½ä¸ºæœ‰æ•ˆæ•°æ®æ—¶ï¼ˆ-1ä¸ºæ— æ•ˆæ•°æ®ï¼‰ï¼Œæ‰èƒ½è®¡ç®—.\n");
+	printf("-------³É¼¨Êı¾İÎ¬»¤²Ëµ¥-------\n");
+	printf("1.Ìí¼Ó: Ìí¼ÓÑ§Éú³É¼¨×ÊÁÏÊı¾İ\n");
+	printf("2.ĞŞ¸Ä£º¸ù¾İÑ§ºÅÀ´ĞŞ¸ÄÈÎÒâÑ§ÉúµÄ³ıÑ§ºÅÍâµÄÆäËû³É¼¨×ÊÁÏÊı¾İ\n");
+	printf("3.É¾³ı£º¸ù¾İÑ§ºÅÉ¾³ıÒ»¸öÑ§Éú\n");
+	printf("4.²éÑ¯£º¸ù¾İÑ§ºÅ²éÑ¯Ò»¸öÑ§ÉúµÄ³É¼¨×ÊÁÏÊı¾İ\n");
+	printf("5.¼ÆËã£ºÅúÁ¿¼ÆËãËùÓĞÑ§ÉúµÄ×Ü³É¼¨¡¢°à¼¶ÅÅÃû¡¢Ğ£¼¶ÅÅÃû¡£Ö»ÓĞ¸÷ÏîÊı¾İ¶¼ÎªÓĞĞ§Êı¾İÊ±£¨-1ÎªÎŞĞ§Êı¾İ£©£¬²ÅÄÜ¼ÆËã.\n");
 	while (1)
 	{
-		printf("è¾“å…¥é€‰é¡¹:");
+		printf("ÊäÈëÑ¡Ïî:");
 		fflush(stdin);
 		scanf("%d", &option);
 		if (option < 1 || option > 5)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥.\n");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
 		else
 			break;
 	}
@@ -539,35 +568,35 @@ void PerformanceData_maintenance()
 	case 5: calculatePerformanceData();	break;
 	}
 }
-//è¾“å…¥æˆç»©èœå•
+//ÊäÈë³É¼¨²Ëµ¥
 void inputPerformanceData()
 {
 	int option, quantity;
-	printf("\t\tè¯·é€‰æ‹©æ·»åŠ å“ªç§å­¦ç”Ÿçš„æˆç»©\n");
-	printf("1-æœ¬ç§‘ç”Ÿ \t 2-ç ”ç©¶ç”Ÿ\n");
-	printf("è¯·è¾“å…¥é€‰é¡¹:");
+	printf("\t\tÇëÑ¡ÔñÌí¼ÓÄÄÖÖÑ§ÉúµÄ³É¼¨\n");
+	printf("1-±¾¿ÆÉú \t 2-ÑĞ¾¿Éú\n");
+	printf("ÇëÊäÈëÑ¡Ïî:");
 	while (1)
 	{
 		scanf("%d", &option);
 		if(option != 1 && option != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º");
 		else
 			break;
 	}
-	printf("\t\tè¯·é€‰æ‹©æ·»åŠ æ•°é‡:\n");
-	printf("1-å•ä¸ª \t 2-å¤šä¸ª\n");
-	printf("è¯·è¾“å…¥é€‰é¡¹:");
+	printf("\t\tÇëÑ¡ÔñÌí¼ÓÊıÁ¿:\n");
+	printf("1-µ¥¸ö \t 2-¶à¸ö\n");
+	printf("ÇëÊäÈëÑ¡Ïî:");
 	while (1)
 	{
 		scanf("%d", &quantity);
 		if(quantity != 1 && quantity != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ï¼š");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë£º");
 		else
 			break;
 	}
 	inputScore(option, quantity);
 }
-//å‚æ•°è¯´æ˜:stu:1-æœ¬ç§‘ç”Ÿ 2-ç ”ç©¶ç”Ÿ quantity:1-å•ä¸ª 2-å¤šä¸ª
+//²ÎÊıËµÃ÷:stu:1-±¾¿ÆÉú 2-ÑĞ¾¿Éú quantity:1-µ¥¸ö 2-¶à¸ö
 void inputScore(int stu, int quantity)
 {
 	int index;
@@ -575,14 +604,14 @@ void inputScore(int stu, int quantity)
 	SUG *pSUG = NULL;
 	SPG *pSPG = NULL;
 	int id;
-	printf("è¯·è¾“å…¥éœ€è¦è¾“å…¥æˆç»©çš„å­¦ç”Ÿçš„å­¦å·:");
+	printf("ÇëÊäÈëĞèÒªÊäÈë³É¼¨µÄÑ§ÉúµÄÑ§ºÅ:");
 	scanf("%d", &id);
-	if (stu == 1) //æŸ¥æ‰¾æœ¬ç§‘ç”Ÿ
+	if (stu == 1) //²éÕÒ±¾¿ÆÉú
 	{
 		pSUG = SUGHead;
 		if(pSUG == NULL)
 		{
-			printf("é“¾è¡¨ä¸­æ— æœ¬ç§‘ç”Ÿæ•°æ®,å³å°†è¿”å›ä¸Šä¸€çº§\n");
+			printf("Á´±íÖĞÎŞ±¾¿ÆÉúÊı¾İ,¼´½«·µ»ØÉÏÒ»¼¶\n");
 			system("pause");
 			return;
 		}
@@ -591,39 +620,39 @@ void inputScore(int stu, int quantity)
 			{
 				if(checkSUGScore(pSUG) == 0)
 				{
-					printf("å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿå·²æœ‰æˆç»©ï¼Œæ— éœ€è¾“å…¥\n", id);
+					printf("Ñ§ºÅÎª%dµÄ±¾¿ÆÉúÒÑÓĞ³É¼¨£¬ÎŞĞèÊäÈë\n", id);
 					system("pause");
 					return;
 				}
 				else
 				{
-					printf("å­¦å·ä¸º%dæœ¬ç§‘ç”Ÿçš„æœ¬ç§‘ç”Ÿæˆç»©å¦‚ä¸‹:(-1ä¸ºæ— æ•ˆæˆç»©)\n", id);
-					printf("å­¦å·\t\tå§“å\t\tæ•°å­¦\t\tè‹±è¯­\t\tCè¯­è¨€\n");
+					printf("Ñ§ºÅÎª%d±¾¿ÆÉúµÄ±¾¿ÆÉú³É¼¨ÈçÏÂ:(-1ÎªÎŞĞ§³É¼¨)\n", id);
+					printf("Ñ§ºÅ\t\tĞÕÃû\t\tÊıÑ§\t\tÓ¢Óï\t\tCÓïÑÔ\n");
 					printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\n",
 					id, pSUG->name, pSUG->score[0], pSUG->score[1], pSUG->score[2]);
-					if(quantity == 1) //è¾“å…¥å•ä¸ªæˆç»©
+					if(quantity == 1) //ÊäÈëµ¥¸ö³É¼¨
 					{
-						printf("1-æ•°å­¦ 2-è‹±è¯­ 3-Cè¯­è¨€\n");
-						printf("è¾“å…¥è¦æ›´æ”¹çš„æˆç»©:\n");
+						printf("1-ÊıÑ§ 2-Ó¢Óï 3-CÓïÑÔ\n");
+						printf("ÊäÈëÒª¸ü¸ÄµÄ³É¼¨:\n");
 						scanf("%d", &index);
-						printf("è¾“å…¥åˆ†æ•°:");
+						printf("ÊäÈë·ÖÊı:");
 						fflush(stdin);
-						scanf("%d", score[0]);
+						scanf("%d", &score[0]);
 						pSUG->score[index - 1] = score[0];
-						printf("æˆç»©ä¿®æ”¹å®Œæˆ\n");
+						printf("³É¼¨ĞŞ¸ÄÍê³É\n");
 						system("pause");
 						return;
 					}
-					else //è¾“å…¥å¤šä¸ªæˆç»©
+					else //ÊäÈë¶à¸ö³É¼¨
 					{
-						printf("è¯·ä¾æ¬¡è¾“å…¥æ•°å­¦ã€è‹±è¯­ã€Cè¯­è¨€æˆç»©:");
+						printf("ÇëÒÀ´ÎÊäÈëÊıÑ§¡¢Ó¢Óï¡¢CÓïÑÔ³É¼¨:");
 						fflush(stdin);
 						for (index = 0; index < 3; index++)
 						{
 							scanf("%d", score[index]);
 							pSUG->score[index] = score[index];
 						}
-						printf("è¯¥æœ¬ç§‘ç”Ÿçš„å…¨éƒ¨æˆç»©ä¿®æ”¹å®Œæˆ\n");
+						printf("¸Ã±¾¿ÆÉúµÄÈ«²¿³É¼¨ĞŞ¸ÄÍê³É\n");
 						system("pause");
 						return;
 					}
@@ -633,14 +662,14 @@ void inputScore(int stu, int quantity)
 				pSUG = pSUG->next;
 		} while (pSUG != NULL);
 		if (pSUG == NULL)
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿ!\n", id);
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄ±¾¿ÆÉú!\n", id);
 	}
-	else //æŸ¥æ‰¾ç ”ç©¶ç”Ÿ
+	else //²éÕÒÑĞ¾¿Éú
 	{
 		pSPG = SPGHead;
 		if(pSPG == NULL)
 		{
-			printf("é“¾è¡¨ä¸­æ— ç ”ç©¶ç”Ÿæ•°æ®,å³å°†è¿”å›ä¸Šä¸€çº§\n");
+			printf("Á´±íÖĞÎŞÑĞ¾¿ÉúÊı¾İ,¼´½«·µ»ØÉÏÒ»¼¶\n");
 			system("pause");
 			return;
 		}
@@ -649,39 +678,39 @@ void inputScore(int stu, int quantity)
 			{
 				if(checkSPGScore(pSPG) == 0)
 				{
-					printf("å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿå·²æœ‰æˆç»©ï¼Œæ— éœ€è¾“å…¥\n", id);
+					printf("Ñ§ºÅÎª%dµÄÑĞ¾¿ÉúÒÑÓĞ³É¼¨£¬ÎŞĞèÊäÈë\n", id);
 					system("pause");
 					return;
 				}
 				else
 				{
-					printf("å­¦å·ä¸º%dç ”ç©¶ç”Ÿçš„ç ”ç©¶ç”Ÿæˆç»©å¦‚ä¸‹:(-1ä¸ºæ— æ•ˆæˆç»©)\n", id);
-					printf("å­¦å·\t\tå§“å\t\tç»¼åˆè¯¾ç¨‹\t\tè®ºæ–‡\n");
+					printf("Ñ§ºÅÎª%dÑĞ¾¿ÉúµÄÑĞ¾¿Éú³É¼¨ÈçÏÂ:(-1ÎªÎŞĞ§³É¼¨)\n", id);
+					printf("Ñ§ºÅ\t\tĞÕÃû\t\t×ÛºÏ¿Î³Ì\t\tÂÛÎÄ\n");
 					printf("%d\t\t%s\t\t%d\t\t%d\n",
 					id, pSPG->name, pSPG->score[0], pSPG->score[1]);
-					if(quantity == 1) //è¾“å…¥å•ä¸ªæˆç»©
+					if(quantity == 1) //ÊäÈëµ¥¸ö³É¼¨
 					{
-						printf("1-ç»¼åˆè¯¾ç¨‹ 2-è®ºæ–‡æˆç»©\n");
-						printf("è¾“å…¥è¦æ›´æ”¹çš„æˆç»©:\n");
+						printf("1-×ÛºÏ¿Î³Ì 2-ÂÛÎÄ³É¼¨\n");
+						printf("ÊäÈëÒª¸ü¸ÄµÄ³É¼¨:\n");
 						scanf("%d", &index);
-						printf("è¾“å…¥åˆ†æ•°:");
+						printf("ÊäÈë·ÖÊı:");
 						fflush(stdin);
-						scanf("%d", score[0]);
+						scanf("%d", &score[0]);
 						pSPG->score[index - 1] = score[0];
-						printf("æˆç»©ä¿®æ”¹å®Œæˆ\n");
+						printf("³É¼¨ĞŞ¸ÄÍê³É\n");
 						system("pause");
 						return;
 					}
-					else //è¾“å…¥å¤šä¸ªæˆç»©
+					else //ÊäÈë¶à¸ö³É¼¨
 					{
-						printf("è¯·ä¾æ¬¡è¾“å…¥ç»¼åˆè¯¾ç¨‹å’Œè®ºæ–‡æˆç»©:");
+						printf("ÇëÒÀ´ÎÊäÈë×ÛºÏ¿Î³ÌºÍÂÛÎÄ³É¼¨:");
 						fflush(stdin);
 						for (index = 0; index < 2; index++)
 						{
-							scanf("%d", score[index]);
+							scanf("%d", &score[index]);
 							pSPG->score[index] = score[index];
 						}
-						printf("è¯¥ç ”ç©¶ç”Ÿçš„å…¨éƒ¨æˆç»©ä¿®æ”¹å®Œæˆ\n");
+						printf("¸ÃÑĞ¾¿ÉúµÄÈ«²¿³É¼¨ĞŞ¸ÄÍê³É\n");
 						system("pause");
 						return;
 					}
@@ -691,41 +720,41 @@ void inputScore(int stu, int quantity)
 				pSPG = pSPG->next;
 		} while (pSPG != NULL);
 		if (pSPG == NULL)
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿ!", id);
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄÑĞ¾¿Éú!", id);
 	}
 }
-//ä¿®æ”¹æˆç»©èœå•
+//ĞŞ¸Ä³É¼¨²Ëµ¥
 void modifyPerformanceData()
 {
 	int option, id;
-	printf("-----ä¿®æ”¹æˆç»©èœå•-----\n");
-	printf("1-ä¿®æ”¹æœ¬ç§‘ç”Ÿæˆç»©\t2-ä¿®æ”¹ç ”ç©¶ç”Ÿæˆç»©\n");
-	printf("è¯·è¾“å…¥é€‰é¡¹:");
+	printf("-----ĞŞ¸Ä³É¼¨²Ëµ¥-----\n");
+	printf("1-ĞŞ¸Ä±¾¿ÆÉú³É¼¨\t2-ĞŞ¸ÄÑĞ¾¿Éú³É¼¨\n");
+	printf("ÇëÊäÈëÑ¡Ïî:");
 	do
 	{
 		scanf("%d", &option);
 		if(option != 1 && option != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥:");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
 		else
 			break;
 	} while (1);
-	printf("è¯·è¾“å…¥è¢«ä¿®æ”¹æˆç»©çš„å­¦ç”Ÿçš„å­¦å·:");
+	printf("ÇëÊäÈë±»ĞŞ¸Ä³É¼¨µÄÑ§ÉúµÄÑ§ºÅ:");
 	scanf("%d", &id);
 	modifyScore(option, id);
 }
-//æ ¹æ®å­¦å·ä¿®æ”¹å­¦ç”Ÿçš„æˆç»©
+//¸ù¾İÑ§ºÅĞŞ¸ÄÑ§ÉúµÄ³É¼¨
 void modifyScore(int stu, int id)
 {
 	int index;
 	int score[3];
 	SUG *pSUG = NULL;
 	SPG *pSPG = NULL;
-	if (stu == 1) //ä¿®æ”¹æœ¬ç§‘ç”Ÿ
+	if (stu == 1) //ĞŞ¸Ä±¾¿ÆÉú
 	{
 		pSUG = SUGHead;
 		if (pSUG == NULL)
 		{
-			printf("é“¾è¡¨ä¸­æ— æœ¬ç§‘ç”Ÿæ•°æ®,å³å°†è¿”å›ä¸Šä¸€çº§\n");
+			printf("Á´±íÖĞÎŞ±¾¿ÆÉúÊı¾İ,¼´½«·µ»ØÉÏÒ»¼¶\n");
 			system("pause");
 			return;
 		}
@@ -733,18 +762,17 @@ void modifyScore(int stu, int id)
 		{
 			if (pSUG->id == id)
 			{
-				printf("å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿæˆç»©å¦‚ä¸‹:(-1ä¸ºæ— æ•ˆæˆç»©)\n", id);
-				printf("å­¦å·\t\tå§“å\t\tæ•°å­¦\t\tè‹±è¯­\t\tCè¯­è¨€\n");
+				printf("Ñ§ºÅÎª%dµÄ±¾¿ÆÉú³É¼¨ÈçÏÂ:(-1ÎªÎŞĞ§³É¼¨)\n", id);
+				printf("Ñ§ºÅ\t\tĞÕÃû\t\tÊıÑ§\t\tÓ¢Óï\t\tCÓïÑÔ\n");
 				printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\n",
 					   id, pSUG->name, pSUG->score[0], pSUG->score[1], pSUG->score[2]);
-				printf("è¯·ä¾æ¬¡è¾“å…¥æ•°å­¦ã€è‹±è¯­ã€Cè¯­è¨€æˆç»©:");
-				fflush(stdin);
+				printf("ÇëÒÀ´ÎÊäÈëÊıÑ§¡¢Ó¢Óï¡¢CÓïÑÔ³É¼¨:");
 				for (index = 0; index < 3; index++)
 				{
-					scanf("%d", score[index]);
+					scanf("%d", &score[index]);
 					pSUG->score[index] = score[index];
 				}
-				printf("è¯¥æœ¬ç§‘ç”Ÿçš„å…¨éƒ¨æˆç»©ä¿®æ”¹å®Œæˆ\n");
+				printf("¸Ã±¾¿ÆÉúµÄÈ«²¿³É¼¨ĞŞ¸ÄÍê³É\n");
 				system("pause");
 				return;
 			}
@@ -752,14 +780,14 @@ void modifyScore(int stu, int id)
 				pSUG = pSUG->next;
 		} while (pSUG != NULL);
 		if (pSUG == NULL)
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿ!\n", id);
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄ±¾¿ÆÉú!\n", id);
 	}
-	else //æŸ¥æ‰¾ç ”ç©¶ç”Ÿ
+	else //²éÕÒÑĞ¾¿Éú
 	{
 		pSPG = SPGHead;
 		if(pSPG == NULL)
 		{
-			printf("ç ”ç©¶ç”Ÿé“¾è¡¨æ— æ•°æ®,å³å°†è¿”å›ä¸Šä¸€å±‚\n");
+			printf("ÑĞ¾¿ÉúÁ´±íÎŞÊı¾İ,¼´½«·µ»ØÉÏÒ»²ã\n");
 			system("pause");
 			return;
 		}
@@ -767,18 +795,18 @@ void modifyScore(int stu, int id)
 		{
 			if (pSPG->id == id)
 			{
-				printf("å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿæˆç»©å¦‚ä¸‹:(-1ä¸ºæ— æ•ˆæˆç»©)\n", id);
-				printf("å­¦å·\t\tå§“å\t\tç»¼åˆè¯¾ç¨‹\t\tè®ºæ–‡\n");
+				printf("Ñ§ºÅÎª%dµÄÑĞ¾¿Éú³É¼¨ÈçÏÂ:(-1ÎªÎŞĞ§³É¼¨)\n", id);
+				printf("Ñ§ºÅ\t\tĞÕÃû\t\t×ÛºÏ¿Î³Ì\t\tÂÛÎÄ\n");
 				printf("%d\t\t%s\t\t%d\t\t%d\n",
 					   id, pSPG->name, pSPG->score[0], pSPG->score[1]);
-				printf("è¯·ä¾æ¬¡è¾“å…¥ç»¼åˆè¯¾ç¨‹å’Œè®ºæ–‡æˆç»©:");
+				printf("ÇëÒÀ´ÎÊäÈë×ÛºÏ¿Î³ÌºÍÂÛÎÄ³É¼¨:");
 				fflush(stdin);
 				for (index = 0; index < 2; index++)
 				{
 					scanf("%d", score[index]);
 					pSPG->score[index] = score[index];
 				}
-				printf("è¯¥ç ”ç©¶ç”Ÿçš„å…¨éƒ¨æˆç»©ä¿®æ”¹å®Œæˆ\n");
+				printf("¸ÃÑĞ¾¿ÉúµÄÈ«²¿³É¼¨ĞŞ¸ÄÍê³É\n");
 				system("pause");
 				return;
 			}
@@ -786,34 +814,34 @@ void modifyScore(int stu, int id)
 				pSPG = pSPG->next;
 		} while (pSPG != NULL);
 		if (pSPG == NULL)
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿ.\n", id);
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄÑĞ¾¿Éú.\n", id);
 		system("pause");
 	}
 }
-//åˆ é™¤å­¦ç”Ÿæˆç»©æ•°æ®èœå•
+//É¾³ıÑ§Éú³É¼¨Êı¾İ²Ëµ¥
 void deletePerformanceData()
 {
 	int stu, id;
-	printf("-----åˆ é™¤å­¦ç”Ÿæˆç»©æ•°æ®èœå•-----");
-	printf("1-æœ¬ç§‘ç”Ÿ\t2-ç ”ç©¶ç”Ÿ");
-	printf("è¯·è¾“å…¥é€‰é¡¹:");
+	printf("-----É¾³ıÑ§Éú³É¼¨Êı¾İ²Ëµ¥-----\n");
+	printf("1-±¾¿ÆÉú\t2-ÑĞ¾¿Éú\n");
+	printf("ÇëÊäÈëÑ¡Ïî:");
 	do
 	{
-		scanf("%d", stu);
+		scanf("%d", &stu);
 		if (stu != 1 && stu != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥:");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
 	} while (stu != 1 && stu != 2);
-	printf("è¯·è¾“å…¥éœ€è¦åˆ é™¤å­¦ç”Ÿçš„å­¦å·:");
+	printf("ÇëÊäÈëĞèÒªÉ¾³ıÑ§ÉúµÄÑ§ºÅ:");
 	scanf("%d", &id);
 	deleteScore(stu, id);
 }
-//æ ¹æ®å­¦å·åˆ é™¤ä¸€ä¸ªå­¦ç”Ÿæˆç»©æ•°æ®ï¼ˆç›¸å…³æ•°æ®è®¾ç½®æˆ-1ï¼‰ stu:1-æœ¬ç§‘ç”Ÿ 2-ç ”ç©¶ç”Ÿ
+//¸ù¾İÑ§ºÅÉ¾³ıÒ»¸öÑ§Éú³É¼¨Êı¾İ£¨Ïà¹ØÊı¾İÉèÖÃ³É-1£© stu:1-±¾¿ÆÉú 2-ÑĞ¾¿Éú
 void deleteScore(int stu, int id)
 {
 	SUG *pSUG = SUGHead;
 	SPG *pSPG = SPGHead;
 	int i;
-	if (stu == 1) //åˆ é™¤æœ¬ç§‘ç”Ÿ
+	if (stu == 1) //É¾³ı±¾¿ÆÉú
 	{
 		do
 		{
@@ -821,20 +849,16 @@ void deleteScore(int stu, int id)
 			{
 				for (i = 0; i < 3; i++)
 					pSUG->score[i] = -1;
-				printf("å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿçš„æ‰€æœ‰æˆç»©å·²è®¾ç½®ä¸º-1\n", id);
-				system("pause");
+				printf("Ñ§ºÅÎª%dµÄ±¾¿ÆÉúµÄËùÓĞ³É¼¨ÒÑÉèÖÃÎª-1\n", id);
 				return;
 			}
 			else
 				pSUG = pSUG->next;
 		} while (pSUG != NULL);
 		if (pSUG == NULL)
-		{
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿ,å³å°†è¿”å›\n", id);
-			system("pause");
-		}
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄ±¾¿ÆÉú,¼´½«·µ»Ø\n", id);
 	}
-	else //åˆ é™¤ç ”ç©¶ç”Ÿ
+	else //É¾³ıÑĞ¾¿Éú
 	{
 		do
 		{
@@ -842,56 +866,51 @@ void deleteScore(int stu, int id)
 			{
 				for (i = 0; i < 2; i++)
 					pSPG->score[i] = -1;
-				printf("å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿçš„æ‰€æœ‰æˆç»©å·²è®¾ç½®ä¸º-1\n", id);
-				system("pause");
+				printf("Ñ§ºÅÎª%dµÄÑĞ¾¿ÉúµÄËùÓĞ³É¼¨ÒÑÉèÖÃÎª-1\n", id);
 				return;
 			}
 			else
 				pSPG = pSPG->next;
 		} while (pSPG != NULL);
 		if (pSPG == NULL)
-		{
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿ,å³å°†è¿”å›\n", id);
-			system("pause");
-		}
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄÑĞ¾¿Éú,¼´½«·µ»Ø\n", id);
 	}
 }
-//æŸ¥è¯¢æˆç»©èœå•
+//²éÑ¯³É¼¨²Ëµ¥
 void inquirePerformanceData()
 {
 	int stu, id;
-	printf("-----æŸ¥è¯¢æˆç»©èœå•-----\n");
-	printf("æŸ¥è¯¢ä½•ç§å­¦ç”Ÿæˆç»©?\n");
-	printf("1-æœ¬ç§‘ç”Ÿ\t2-ç ”ç©¶ç”Ÿ");
-	printf("è¾“å…¥é€‰é¡¹:");
+	printf("-----²éÑ¯³É¼¨²Ëµ¥-----\n");
+	printf("²éÑ¯ºÎÖÖÑ§Éú³É¼¨?\n");
+	printf("1-±¾¿ÆÉú\t2-ÑĞ¾¿Éú\n");
+	printf("ÊäÈëÑ¡Ïî:");
 	do
 	{
 		scanf("%d", &stu);
 		if (stu != 1 && stu != 2)
-			printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥:");
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
 	} while (stu != 1 && stu != 2);
-	printf("è¾“å…¥éœ€è¦æŸ¥æ‰¾å­¦ç”Ÿçš„id:");
+	printf("ÊäÈëĞèÒª²éÕÒÑ§ÉúµÄid:");
 	scanf("%d", &id);
 	inquireScore(stu, id);
 }
-//æ ¹æ®å­¦å·æŸ¥æ‰¾å­¦ç”Ÿæˆç»© stu:1-æœ¬ç§‘ç”Ÿ 2-ç ”ç©¶ç”Ÿ id:éœ€è¦æŸ¥æ‰¾å­¦ç”Ÿçš„å­¦å·
+//¸ù¾İÑ§ºÅ²éÕÒÑ§Éú³É¼¨ stu:1-±¾¿ÆÉú 2-ÑĞ¾¿Éú id:ĞèÒª²éÕÒÑ§ÉúµÄÑ§ºÅ
 void inquireScore(int stu, int id)
 {
 	SUG *pSUG = NULL;
 	SPG *pSPG = NULL;
-	if (stu == 1) //æŸ¥æ‰¾æœ¬ç§‘ç”Ÿ
+	if (stu == 1) //²éÕÒ±¾¿ÆÉú
 	{
 		pSUG = SUGHead;
 		do
 		{
 			if (pSUG->id == id)
 			{
-				printf("å·²æ‰¾åˆ°å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿçš„æˆç»©ä¿¡æ¯\n", id);
-				printf("å­¦å·\t\tå§“å\t\tæ•°å­¦\t\tè‹±è¯­\t\tCè¯­è¨€\t\tæ€»æˆç»©\t\tç­æ’å\t\tæ ¡æ’å\n");
+				printf("ÒÑÕÒµ½Ñ§ºÅÎª%dµÄ±¾¿ÆÉúµÄ³É¼¨ĞÅÏ¢\n", id);
+				printf("Ñ§ºÅ\t\tĞÕÃû\t\tÊıÑ§\t\tÓ¢Óï\t\tCÓïÑÔ\t\t×Ü³É¼¨\t\t°àÅÅÃû\t\tĞ£ÅÅÃû\n");
 				printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
 					   id, pSUG->name, pSUG->score[0], pSUG->score[1],pSUG->score[2], 
 					   pSUG->score[3],pSUG->score[4],pSUG->score[5]);
-				system("pause");
 				return;
 			}
 			else
@@ -899,24 +918,22 @@ void inquireScore(int stu, int id)
 		} while (pSUG != NULL);
 		if (pSUG == NULL)
 		{
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„æœ¬ç§‘ç”Ÿçš„æˆç»©ä¿¡æ¯,å³å°†è¿”å›\n", id);
-			system("pause");
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄ±¾¿ÆÉúµÄ³É¼¨ĞÅÏ¢,¼´½«·µ»Ø\n", id);
 			return;
 		}
 	}
-	else //æŸ¥æ‰¾ç ”ç©¶ç”Ÿ
+	else //²éÕÒÑĞ¾¿Éú
 	{
 		pSPG = SPGHead;
 		do
 		{
 			if (pSPG->id == id)
 			{
-				printf("å·²æ‰¾åˆ°å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿçš„æˆç»©ä¿¡æ¯\n", id);
-				printf("å­¦å·\t\tå§“å\t\tç»¼åˆè¯¾ç¨‹\t\tè®ºæ–‡\t\tæ€»æˆç»©\t\tç­æ’å\t\tæ ¡æ’å\n");
+				printf("ÒÑÕÒµ½Ñ§ºÅÎª%dµÄÑĞ¾¿ÉúµÄ³É¼¨ĞÅÏ¢\n", id);
+				printf("Ñ§ºÅ\t\tĞÕÃû\t\t×ÛºÏ¿Î³Ì\t\tÂÛÎÄ\t\t×Ü³É¼¨\t\t°àÅÅÃû\t\tĞ£ÅÅÃû\n");
 				printf("%d\t\t%s\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",
 					   id, pSPG->name, pSPG->score[0], pSPG->score[1],pSPG->score[2], 
 					   pSPG->score[3],pSPG->score[4]);
-				system("pause");
 				return;
 			}
 			else
@@ -924,48 +941,48 @@ void inquireScore(int stu, int id)
 		} while (pSPG != NULL);
 		if (pSPG == NULL)
 		{
-			printf("æœªæ‰¾åˆ°å­¦å·ä¸º%dçš„ç ”ç©¶ç”Ÿçš„æˆç»©ä¿¡æ¯,å³å°†è¿”å›\n", id);
-			system("pause");
+			printf("Î´ÕÒµ½Ñ§ºÅÎª%dµÄÑĞ¾¿ÉúµÄ³É¼¨ĞÅÏ¢,¼´½«·µ»Ø\n", id);
 			return;
 		}
 	}
 }
-//è®¡ç®—æˆç»©å‡½æ•°
+//¼ÆËã³É¼¨º¯Êı
 void calculatePerformanceData()
 {
-	void calculateSUGTotalScore();
-	void calculateSPGTotalScore();
-	SUG *pSUG = SUGHead, *psug;//å°å†™ä¸ºéå†ç”¨
+
+	SUG *pSUG = SUGHead, *psug;//Ğ¡Ğ´Îª±éÀúÓÃ
 	SPG *pSPG = SPGHead, *pspg;
-	printf("æ­£åœ¨è®¡ç®—æ‰€æœ‰å­¦ç”Ÿæˆç»©,è¯·ç¨åâ€¦â€¦\n");
+	printf("ÕıÔÚ¼ÆËãËùÓĞÑ§Éú³É¼¨,ÇëÉÔºó¡­¡­\n");
 	calculateSUGTotalScore();
 	while (pSUG != NULL)
 	{
-		if (checkSUGScore(pSUG)) //å½“å‰å­¦ç”Ÿæ²¡æœ‰æ— æ•ˆæˆç»©
-		{
+		if (checkSUGScore(pSUG) == 0) //µ±Ç°Ñ§ÉúÃ»ÓĞÎŞĞ§³É¼¨
+		{ //¿ªÊ¼¼ÆËã±¾¿ÆÉúÅÅÃû
 			pSUG->score[4] = pSUG->score[5] = 1;
 			psug = SUGHead;
 			while (psug != NULL)
 			{
 				if (psug->score[3] > pSUG ->score[3])
 				{
-					if (strcmp(psug->class, pSUG->class) == 0)//äºŒè€…åœ¨åŒä¸€ä¸ªç­
-						pSUG->score[4]++; //å½“å‰å­¦ç”Ÿç­æ’å+1
+					if (strcmp(psug->class, pSUG->class) == 0)//¶şÕßÔÚÍ¬Ò»¸ö°à
+					{
+						pSUG->score[4]++; //µ±Ç°Ñ§Éú°àÅÅÃû+1
+						pSUG->score[5]++; //µ±Ç°Ñ§ÉúĞ£ÅÅÃû+1
+					}
 					else
-						pSUG->score[5]++; //å½“å‰å­¦ç”Ÿæ ¡æ’å+1
+						pSUG->score[5]++; //µ±Ç°Ñ§ÉúĞ£ÅÅÃû+1
 				}
-				psug = psug->next; //è¢«æ¯”è¾ƒèŠ‚ç‚¹åç§»
+				psug = psug->next; //±»±È½Ï½ÚµãºóÒÆ
 			}
 		}
-		else
-			pSUG = pSUG->next;
+		pSUG = pSUG->next;
 	}
-	printf("æœ¬ç§‘ç”Ÿæˆç»©è®¡ç®—å®Œæ¯•\n");
-	printf("æ­£åœ¨è®¡ç®—ç ”ç©¶ç”Ÿæˆç»©,è¯·ç¨åâ€¦â€¦\n");
+	printf("±¾¿ÆÉú³É¼¨¼ÆËãÍê±Ï\n");
+	printf("ÕıÔÚ¼ÆËãÑĞ¾¿Éú³É¼¨,ÇëÉÔºó¡­¡­\n");
 	calculateSPGTotalScore();
 	while (pSPG != NULL)
 	{
-		if (checkSPGScore(pSPG))
+		if (checkSPGScore(pSPG) == 0)
 		{
 			pSPG->score[3] = pSPG->score[4] = 1;
 			pspg = SPGHead;
@@ -974,20 +991,21 @@ void calculatePerformanceData()
 				if (pspg->score[2] > pSPG->score[2])
 				{
 					if (strcmp(pspg->class, pSPG->class) == 0)
+					{
 						pSPG->score[3]++;
+						pSPG->score[4]++;
+					}
 					else
 						pSPG->score[4]++;
 				}
 				pspg = pspg->next;
 			}
 		}
-		else
-			pSPG = pSPG->next;
+		pSPG = pSPG->next;
 	}
-	printf("ç ”ç©¶ç”Ÿæˆç»©è®¡ç®—å®Œæ¯•\n");
-	system("pause");
+	printf("ÑĞ¾¿Éú³É¼¨¼ÆËãÍê±Ï\n");
 }
-//è®¡ç®—æœ¬ç§‘ç”Ÿæ€»æˆç»©
+//¼ÆËã±¾¿ÆÉú×Ü³É¼¨
 void calculateSUGTotalScore()
 {
 	SUG *pSUG = SUGHead;
@@ -998,11 +1016,10 @@ void calculateSUGTotalScore()
 			if (pSUG->score[3] == -1)
 				pSUG->score[3] = pSUG->score[0] + pSUG->score[1] + pSUG->score[2];
 		}
-		else
-			pSUG = pSUG->next;
+		pSUG = pSUG->next;
 	}
 }
-//è®¡ç®—ç ”ç©¶ç”Ÿæ€»æˆç»©
+//¼ÆËãÑĞ¾¿Éú×Ü³É¼¨
 void calculateSPGTotalScore()
 {
 	SPG *pSPG = SPGHead;
@@ -1013,7 +1030,322 @@ void calculateSPGTotalScore()
 			if (pSPG->score[2] == -1)
 				pSPG->score[2] = pSPG->score[0] + pSPG->score[1];
 		}
+		pSPG = pSPG->next;
+	}
+}
+
+//ÅÅÃû¹¦ÄÜ²Ëµ¥
+void Calculate_rank(){
+	int stu/*, option*/;
+	printf("-----ÅÅÃû¹¦ÄÜ²Ëµ¥-----\n");
+	printf("ÇëÑ¡Ôñ²Ù×÷µÄÑ§ÉúÀàĞÍ:\n");
+	printf("1-±¾¿ÆÉú	2-ÑĞ¾¿Éú\n");
+	printf("ÇëÊäÈëÑ¡Ïî:");
+	do
+	{
+		scanf("%d", &stu);
+		if (stu != 1 && stu != 2)
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (stu != 1 && stu != 2);
+	if (stu == 1)
+		calculateSUGRank();
+	else
+		calculateSPGRank();
+}
+//¼ÆËãËùÓĞ±¾¿ÆÉúµÄ×Ü³É¼¨ºÍ°àĞ£ÅÅÃû
+void calculateSUGRank()
+{
+	SUG *pSUG = SUGHead, *psug;
+	printf("ÕıÔÚ¼ÆËãËùÓĞ±¾¿ÆÉúµÄ×Ü³É¼¨Óë°àĞ£ÅÅÃû,ÇëÉÔºó¡­¡­\n");
+	calculateSUGTotalScore();
+	while (pSUG != NULL)
+	{
+		if (checkSUGScore(pSUG) == 0) //µ±Ç°Ñ§ÉúÃ»ÓĞÎŞĞ§³É¼¨
+		{ //¿ªÊ¼¼ÆËã±¾¿ÆÉúÅÅÃû
+			pSUG->score[4] = pSUG->score[5] = 1;
+			psug = SUGHead;
+			while (psug != NULL)
+			{
+				if (psug->score[3] > pSUG ->score[3])
+				{
+					if (strcmp(psug->class, pSUG->class) == 0)//¶şÕßÔÚÍ¬Ò»¸ö°à
+					{
+						pSUG->score[4]++; //µ±Ç°Ñ§Éú°àÅÅÃû+1
+						pSUG->score[5]++; //µ±Ç°Ñ§ÉúĞ£ÅÅÃû+1
+					}
+					else
+						pSUG->score[5]++; //µ±Ç°Ñ§ÉúĞ£ÅÅÃû+1
+				}
+				psug = psug->next; //±»±È½Ï½ÚµãºóÒÆ
+			}
+		}
+		pSUG = pSUG->next;
+	}
+	printf("ËùÓĞ±¾¿ÆÉúµÄ×Ü³É¼¨Óë°àĞ£ÅÅÃû¼ÆËãÍê±Ï\n");
+}
+//¼ÆËãËùÓĞÑĞ¾¿ÉúµÄ×Ü³É¼¨ºÍ°àĞ£ÅÅÃû
+void calculateSPGRank()
+{
+	SPG *pSPG = SPGHead, *pspg;
+	printf("ÕıÔÚ¼ÆËãÑĞ¾¿ÉúµÄ×Ü³É¼¨ºÍ°àĞ£ÅÅÃû,ÇëÉÔºó¡­¡­\n");
+	calculateSPGTotalScore();
+	while (pSPG != NULL)
+	{
+		if (checkSPGScore(pSPG) == 0)
+		{
+			pSPG->score[3] = pSPG->score[4] = 1;
+			pspg = SPGHead;
+			while (pspg != NULL)
+			{
+				if (pspg->score[2] > pSPG->score[2])
+				{
+					if (strcmp(pspg->class, pSPG->class) == 0)
+					{
+						pSPG->score[3]++;
+						pSPG->score[4]++;
+					}
+					else
+						pSPG->score[4]++;
+				}
+				pspg = pspg->next;
+			}
+		}
+		pSPG = pSPG->next;
+	}
+	printf("ËùÓĞÑĞ¾¿ÉúµÄ×Ü³É¼¨ºÍ°àĞ£ÅÅÃû¼ÆËãÍê±Ï\n");
+}
+
+//3.ÅÅĞò¹¦ÄÜ²Ëµ¥
+void Sort_print()
+{
+	int stu, option;
+	char class[30];
+	printf("-----ÅÅĞòÊä³ö²Ëµ¥-----\n");
+	printf("ÇëÑ¡ÔñĞèÒª²Ù×÷µÄÑ§ÉúÀàĞÍ\n");
+	printf("1-±¾¿ÆÉú	2-ÑĞ¾¿Éú\n");
+	printf("ÇëÊäÈë:");
+	do
+	{
+		scanf("%d", &stu);
+		if (stu != 1 && stu != 2)
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (stu != 1 && stu != 2);
+	printf("ÇëÑ¡Ôñ¹¦ÄÜ.\n");
+	printf("1-È«Ğ£Ñ§ÉúĞÅÏ¢°´×Ü³É¼¨´Ó¸ßµ½µÍÅÅĞò²¢ÏÔÊ¾\n");
+	printf("2-Ä³¸ö°àÑ§ÉúĞÅÏ¢°´×Ü³É¼¨´Ó¸ßµ½µÍÅÅĞò²¢ÏÔÊ¾\n");
+	printf("ÇëÊäÈë:");
+	do
+	{
+		scanf("%d", &option);
+		if (option != 1 && option != 2)
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (option != 1 && option != 2);
+	if (option == 1) //ÏÔÊ¾È«Ğ£Ñ§ÉúĞÅÏ¢
+	{
+		if (stu == 1)
+			schoolSort(SUGHead);
 		else
-			pSPG = pSPG->next;
+			postSchoolSort(SPGHead);
+	}
+	else //°´°à¼¶ÏÔÊ¾
+	{
+		if (stu == 1)
+		{
+			printf("ÇëÊäÈëĞèÒªÏÔÊ¾µÄ±¾¿ÆÉú°à¼¶:");
+			fflush(stdin);
+			scanf("%s", &class);
+			classSort(SUGHead, class);
+		}
+		else
+		{
+			printf("ÇëÊäÈëĞèÒªÏÔÊ¾µÄÑĞ¾¿Éú°à¼¶£º");
+			fflush(stdin);
+			scanf("%s", &class);
+			postClassSort(SPGHead, class);
+		}
+	}
+}
+
+//4.²éÑ¯¹¦ÄÜ²Ëµ¥
+void Inquire_information()
+{
+	int stu, option, chose;
+	char class[30];
+	printf("-----²éÑ¯¹¦ÄÜ²Ëµ¥-----\n");
+	printf("ÇëÑ¡ÔñĞèÒª²Ù×÷µÄÊı¾İ:\n");
+	printf("1-±¾¿ÆÉú	2-ÑĞ¾¿Éú\n");
+	printf("ÇëÑ¡Ôñ:");
+	do
+	{
+		scanf("%d", &stu);
+		if (stu != 1 && stu != 2)
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (stu != 1 && stu != 2);
+	printf("ÇëÑ¡ÔñĞèÒªÊµÏÖµÄ¹¦ÄÜ:\n");
+	printf("1-·ÖÒ³ÏÔÊ¾È«²¿Ñ§ÉúµÄĞÅÏ¢\n");
+	printf("2-°´°à¼¶ÏÔÊ¾±¾°àÈ«²¿Ñ§ÉúĞÅÏ¢\n");
+	printf("3-¸ù¾İÑ§ºÅ»òÕßĞÕÃû²éÑ¯Ñ§ÉúĞÅÏ¢\n");
+	printf("4-ÔÚÄ³¸ö°à¼¶ÖĞ²éÑ¯Ä³ÃÅ¿Î³É¼¨²»¼°¸ñÑ§ÉúĞÅÏ¢\n");
+	printf("ÇëÊäÈëÑ¡Ïî:");
+	do
+	{
+		scanf("%d", &option);
+		if (option < 1 || option > 4)
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (option < 1 || option > 4);
+	if (option == 1)//Ñ¡ÔñÁË¹¦ÄÜ1
+	{
+		if (stu == 1)
+			showAll(SUGHead);
+		else
+			postShowAll(SPGHead);
+	}
+	else if (option == 2)//Ñ¡ÔñÁË¹¦ÄÜ2
+	{
+		if (stu == 1)
+		{
+			printf("ÇëÊäÈëÒªÏÔÊ¾µÄ±¾¿ÆÉú°à¼¶:");
+			scanf("%s", &class);
+			classShow(SUGHead, class);
+		}
+		else
+		{
+			printf("ÇëÊäÈëÒªÏÔÊ¾µÄÑĞ¾¿Éú°à¼¶:");
+			scanf("%s", &class);
+			postClassShow(SPGHead, class);
+		}
+	}
+	else if (option == 3)//Ñ¡ÔñÁË¹¦ÄÜ3
+	{
+		int id;
+		char name[20];
+		if (stu == 1) //²Ù×÷±¾¿ÆÉúÊı¾İ
+		{
+			printf("ÊäÈë±¾¿ÆÉúÑ§ºÅ»¹ÊÇĞÕÃû?\n");
+			printf("1-Ñ§ºÅ	2-ĞÕÃû\n");
+			printf("ÊäÈë:");
+			scanf("%d", &chose);
+			if (chose == 1)
+			{
+				printf("ÊäÈë±¾¿ÆÉúÑ§ºÅ:");
+				scanf("%d", &id);
+				showOne1(SUGHead, id);
+			}
+			else
+			{
+				printf("ÊäÈë±¾¿ÆÉúĞÕÃû:");
+				scanf("%s", &name);
+				showOne2(SUGHead, name);
+			}
+		}
+		else //²Ù×÷ÑĞ¾¿ÉúÊı¾İ
+		{
+			printf("ÊäÈëÑĞ¾¿ÉúÑ§ºÅ»¹ÊÇĞÕÃû?\n");
+			printf("1-Ñ§ºÅ	2-ĞÕÃû\n");
+			printf("ÊäÈë:");
+			scanf("%d", &chose);
+			if (chose == 1)
+			{
+				printf("ÊäÈëÑĞ¾¿ÉúÑ§ºÅ:");
+				scanf("%d", &id);
+				postShowOne1(SPGHead, id);
+			}
+			else
+			{
+				printf("ÊäÈëÑĞ¾¿ÉúĞÕÃû:");
+				scanf("%s", &name);
+				postShowOne2(SPGHead, name);
+			}
+		}
+	}
+	else //Ñ¡ÔñÁË¹¦ÄÜ4
+	{
+		if (stu == 1)
+		{
+			printf("ÊäÈë°à¼¶ºÍ¿ÆÄ¿£¬²éÑ¯¸Ã°à¸Ã¿ÆËùÓĞ²»¼°¸ñµÄ±¾¿ÆÉú\n");
+			printf("ÊäÈëĞèÒª²éÑ¯µÄ°à¼¶:");
+			scanf("%s", &class);
+			printf("ÇëÑ¡Ôñ¿ÆÄ¿:1-¸ßÊı	2-Ó¢Óï	3-CÓïÑÔ\n");
+			scanf("%d", &chose);
+			showClassPass(SUGHead, class, chose);
+		}
+		else
+		{
+			printf("ÊäÈë°à¼¶ºÍ¿ÆÄ¿£¬²éÑ¯¸Ã°à¸Ã¿ÆËùÓĞ²»¼°¸ñµÄÑĞ¾¿Éú\n");
+			printf("ÊäÈëĞèÒª²éÑ¯µÄ°à¼¶:");
+			scanf("%s", &class);
+			printf("ÇëÑ¡Ôñ¿ÆÄ¿:1-×ÛºÏ¿Î³Ì	2-ÂÛÎÄ³É¼¨\n");
+			scanf("%d", &chose);
+			showClassPass(SUGHead, class, chose);
+		}
+	}
+}
+
+//5.Í³¼Æ¹¦ÄÜ²Ëµ¥
+void Performance_statistic()
+{
+	int stu, option, lesson;
+	char class[20];
+	printf("-----Í³¼Æ¹¦ÄÜ²Ëµ¥-----\n");
+	printf("Ñ¡Ôñ¹¦ÄÜ:\n");
+	printf("1-Í³¼Æ²¢ÏÔÊ¾Ä³ÃÅ¿ÎÃ¿¸ö°àµÄÆ½¾ù³É¼¨\n");
+	printf("2-ÔÚÄ³¸ö°àÖĞÍ³¼Æ²¢ÏÔÊ¾Ä³ÃÅ¿Î³Ì²»Í¬µÈ¼¶µÄÑ§ÉúÈËÊı\n");
+	printf("ÇëÊäÈë:");
+	do
+	{
+		scanf("%d", &option);
+		if (option != 1 && option != 2)
+			printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (option != 1 && option != 2);
+	printf("ÇëÑ¡Ôñ²Ù×÷µÄÑ§ÉúÀàĞÍ:\n");
+	printf("1-±¾¿ÆÉú	2-ÑĞ¾¿Éú\n");
+	printf("ÇëÊäÈë:");
+	do
+	{
+		scanf("%d", &stu);
+		if (stu != 1 && stu != 2)
+		printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë:");
+	} while (stu != 1 && stu != 2);
+	if (option == 1)
+	{
+		if (stu == 1)
+		{
+			printf("ÇëÑ¡ÔñÏÔÊ¾µÄ¿Î³Ì:\n");
+			printf("1-ÊıÑ§	2-Ó¢Óï	3-CÓïÑÔ\n");
+			printf("ÇëÊäÈë:");
+			scanf("%d", &lesson);
+			countAverage(SUGHead, lesson);
+		}
+		else
+		{
+			printf("ÇëÑ¡ÔñÏÔÊ¾µÄ¿Î³Ì:\n");
+			printf("1-×ÛºÏ¿Î³Ì	2-ÂÛÎÄ³É¼¨\n");
+			printf("ÇëÊäÈë:");
+			scanf("%d", &lesson);
+			postCountAverage(SPGHead, lesson);
+		}
+	}
+	else
+	{
+		if (stu == 1)
+		{
+			printf("ÊäÈë²éÕÒµÄ°à¼¶:");
+			scanf("%s", &class);
+			printf("ÊäÈë²éÕÒµÄ¿Î³Ì:\n");
+			printf("1-ÊıÑ§	2-Ó¢Óï	3-CÓïÑÔ\n");
+			printf("ÇëÊäÈë:");
+			scanf("%d", &lesson);
+			classCourse(SUGHead, class, lesson);
+		}
+		else
+		{
+			printf("ÊäÈë²éÕÒµÄ°à¼¶:");
+			scanf("%s", &class);
+			printf("ÊäÈë²éÕÒµÄ¿Î³Ì:\n");
+			printf("1-×ÛºÏ¿Î³Ì	2-ÂÛÎÄ³É¼¨\n");
+			printf("ÇëÊäÈë:");
+			scanf("%d", &lesson);
+			postClassCourse(SPGHead, class, lesson);
+		}
 	}
 }

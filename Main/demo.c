@@ -1,40 +1,50 @@
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
-#include "studentManage.h"
+#include <stdlib.h>
+#include "dataStructure.h"
+#include "lxz.h"
 #include "menu.h"
 
 void main()
 {
 	int option;
-	system("chcp 65501"); //å°†ç»ˆç«¯ä»¥UTF-8ç¼–ç æ ¼å¼è¾“å‡º
+	// system("chcp 65501"); //½«ÖÕ¶ËÒÔUTF-8±àÂë¸ñÊ½Êä³ö
+	system("chcp 936");
 	ReadFromFile();
+	printf("\n");
+	calculatePerformanceData();
+	printf("\n");
+	system("pause");
+	system("cls");
 	while (1)
 	{
-		printf("=================æ¬¢è¿ä½¿ç”¨å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ=================\n");
-		printf("||      1-æ•°æ®ç»´æŠ¤                       2-è®¡ç®—æ’å      ||\n");
-		printf("||      3-æ’åºè¾“å‡º                       4-æŸ¥è¯¢ä¿¡æ¯      ||\n");
-		printf("||      5-æˆç»©ç»Ÿè®¡                       6-ä¿å­˜é€€å‡º      ||\n");
+		printf("=================»¶Ó­Ê¹ÓÃÑ§Éú³É¼¨¹ÜÀíÏµÍ³=================\n");
+		printf("||      1-Êı¾İÎ¬»¤                       2-¼ÆËãÅÅÃû      ||\n");
+		printf("||      3-ÅÅĞòÊä³ö                       4-²éÑ¯ĞÅÏ¢      ||\n");
+		printf("||      5-³É¼¨Í³¼Æ                       6-±£´æÍË³ö      ||\n");
 		printf("==========================================================\n");
-		// printf("æç¤ºï¼šè¿›å…¥ä¸»èœå•å¤§å¾ªç¯,é€‰æ‹©6å¯é€€å‡º\n");
 		while (1)
 		{
 			fflush(stdin);
-			printf("è¾“å…¥ä¸»èœå•ç¼–å·:");
+			printf("ÊäÈëÖ÷²Ëµ¥±àºÅ:");
 			scanf("%d", &option);
 			if (option < 1 || option > 6)
-				printf("è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥.\n");
+				printf("ÊäÈëÓĞÎó£¬ÇëÖØĞÂÊäÈë.\n");
 			else
 				break;
 		}
 		switch (option)
 		{
-		case 1: Data_maintenance();      system("cls"); break;
-		case 2: Calculate_rank();        system("cls"); break;
-		case 3: Sort_print();            system("cls"); break;
-		case 4: Inquire_information();   system("cls"); break;
-		case 5: Performance_statistic(); system("cls"); break;
+		case 1: Data_maintenance();		 system("pause");    system("cls"); break;
+		case 2: Calculate_rank();      	 system("pause"); 	 system("cls"); break;
+		case 3: Sort_print();          	 system("pause"); 	 system("cls"); break;
+		case 4: Inquire_information();   system("pause");	 system("cls"); break;
+		case 5: Performance_statistic(); system("pause");	 system("cls"); break;
 		case 6: SaveToFile();             return;
 		}
 	}
+//	SaveToFile();
+//	printf("³É¹¦±£´æĞÅÏ¢\n");
+//	printf("³ÌĞò½áÊø£¬Ğ»Ğ»Ê¹ÓÃ\n");
 }
